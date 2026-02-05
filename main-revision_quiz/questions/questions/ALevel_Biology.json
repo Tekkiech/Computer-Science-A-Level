@@ -1,0 +1,37 @@
+[
+  {
+    "topic": "Cell Biology",
+    "question": "Which part of a cell contains DNA?",
+    "answer": "nucleus",
+    "marks": 1,
+    "difficulty": "Easy"
+  },
+  {
+    "topic": "Genetics",
+    "question": "What carries inherited information?",
+    "answer": "genes",
+    "marks": 1,
+    "difficulty": "Easy"
+  },
+  {
+    "topic": "Ecology",
+    "question": "Name a producer in a food chain",
+    "answer": "plant",
+    "marks": 1,
+    "difficulty": "Easy"
+  },
+  {
+    "topic": "Human Biology",
+    "question": "What organ pumps blood?",
+    "answer": "heart",
+    "marks": 1,
+    "difficulty": "Easy"
+  },
+  {
+    "topic": "Enzymes",
+    "question": "Enzymes speed up?",
+    "answer": "reactions",
+    "marks": 1,
+    "difficulty": "Easy"
+  }
+]
