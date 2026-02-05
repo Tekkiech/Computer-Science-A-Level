@@ -1,10 +1,10 @@
 import json
 import os
+import sys
 
 # -------------------------------
 # Constants
 # -------------------------------
-
 QUESTIONS_DIR = "questions"
 PERFORMANCE_FILE = "performance.json"
 
@@ -18,11 +18,18 @@ SUBJECTS = [
     "Computer_Science",
 ]
 
+
+# -------------------------------
+# Helper Functions
+# -------------------------------
+def clear_screen():
+    """Clear the terminal screen (cross-platform)."""
+    os.system("cls" if os.name == "nt" else "clear")
+
+
 # -------------------------------
 # File Handling
 # -------------------------------
-
-
 def load_questions(level, subject):
     filename = f"{level}_{subject}.json"
     path = os.path.join(QUESTIONS_DIR, filename)
@@ -39,11 +46,11 @@ def load_performance():
     try:
         with open(PERFORMANCE_FILE, "r") as file:
             content = file.read().strip()
-            if not content:  # file is empty
+            if not content:
                 return {}
             return json.loads(content)
     except json.JSONDecodeError:
-        print("Warning: performance.json is corrupted or invalid. Starting fresh.")
+        print("Warning: performance.json is corrupted. Starting fresh.\n")
         return {}
 
 
@@ -55,19 +62,29 @@ def save_performance(performance):
 # -------------------------------
 # Utility Functions
 # -------------------------------
-
-
-def choose_option(options, prompt):
+def choose_option(options, prompt, allow_back=False):
+    """Show a numbered menu and return the selected option."""
     while True:
-        print(prompt)
+        print("\n" + prompt)
         for i, option in enumerate(options, 1):
             print(f"{i}. {option.replace('_', ' ')}")
-        choice = input("Enter number: ")
+        extra = 0
+        if allow_back:
+            extra = 1
+            print(f"{len(options) + 1}. Go back")
+        print(f"{len(options) + 1 + extra}. Exit")
+
+        choice = input("Enter number: ").strip()
         if choice.isdigit():
             choice = int(choice)
             if 1 <= choice <= len(options):
                 return options[choice - 1]
-        print("Invalid input. Please try again.\n")
+            elif allow_back and choice == len(options) + 1:
+                return "BACK"
+            elif choice == len(options) + 1 + extra:
+                print("Exiting program. Goodbye!")
+                sys.exit()
+        print("Invalid input. Please try again.")
 
 
 def get_accuracy(data):
@@ -79,8 +96,6 @@ def get_accuracy(data):
 # -------------------------------
 # Quiz Logic
 # -------------------------------
-
-
 def ask_question(question, performance, key):
     topic = question["topic"]
     correct_answer = question["answer"]
@@ -91,7 +106,7 @@ def ask_question(question, performance, key):
     else:
         correct_answer = [correct_answer.lower().strip()]
 
-    user_answer = input(question["question"] + " ").lower().strip()
+    user_answer = input("\n" + question["question"] + " ").lower().strip()
 
     if topic not in performance[key]:
         performance[key][topic] = {"attempted": 0, "correct": 0}
@@ -106,40 +121,74 @@ def ask_question(question, performance, key):
 
 
 # -------------------------------
-# Summary
+# Performance Viewing
 # -------------------------------
+def view_performance(performance):
+    clear_screen()
+    if not performance:
+        print("\nNo performance data found.\n")
+        input("Press Enter to return to main menu...")
+        return
 
-
-def show_summary(data):
-    print("\nSession Summary")
-    print("----------------")
-    for topic, stats in data.items():
-        accuracy = get_accuracy(stats) * 100
-        print(f"{topic}: {accuracy:.1f}% correct")
+    print("\nAll Recorded Performance:\n------------------------")
+    for key, topics in performance.items():
+        print(f"\n{key.replace('_', ' ')}:")
+        for topic, stats in topics.items():
+            accuracy = get_accuracy(stats) * 100
+            print(
+                f"  {topic}: {accuracy:.1f}% correct ({stats['correct']}/{stats['attempted']})"
+            )
+    print("\nEnd of performance data.\n")
+    input("Press Enter to return to main menu...")
 
 
 # -------------------------------
 # Main Program
 # -------------------------------
-
-
-def main():
-    print("Adaptive Revision & Quiz System")
-    print("-------------------------------\n")
-
+def main_menu():
     performance = load_performance()
 
-    level = choose_option(LEVELS, "Choose qualification level:")
-    subject = choose_option(SUBJECTS, "Choose subject:")
+    while True:
+        clear_screen()
+        print("=== Adaptive Revision & Quiz System ===\n")
+        print("Main Menu:")
+        print("1. Start Quiz")
+        print("2. View Performance")
+        print("3. Exit")
+
+        choice = input("\nEnter number: ").strip()
+        if choice == "1":
+            start_quiz(performance)
+        elif choice == "2":
+            view_performance(performance)
+        elif choice == "3":
+            print("Exiting program. Goodbye!")
+            sys.exit()
+        else:
+            print("Invalid input. Please try again.\n")
+
+
+def start_quiz(performance):
+    clear_screen()
+    # Level selection
+    level = choose_option(LEVELS, "Choose qualification level:", allow_back=True)
+    if level == "BACK":
+        return
+
+    clear_screen()
+    # Subject selection
+    subject = choose_option(SUBJECTS, "Choose subject:", allow_back=True)
+    if subject == "BACK":
+        return
 
     key = f"{level}_{subject}"
-
     if key not in performance:
         performance[key] = {}
 
     questions = load_questions(level, subject)
     if not questions:
-        print("No questions found for this subject/level. Exiting.")
+        print("No questions found for this subject/level. Returning to main menu.\n")
+        input("Press Enter to continue...")
         return
 
     print(f"\nStarting quiz: {level} {subject.replace('_', ' ')}\n")
@@ -148,12 +197,21 @@ def main():
         ask_question(question, performance, key)
 
     save_performance(performance)
+    print("\n--- Session Summary ---")
     show_summary(performance[key])
+    input("\nPress Enter to return to main menu...")
+
+
+def show_summary(data):
+    for topic, stats in data.items():
+        accuracy = get_accuracy(stats) * 100
+        print(
+            f"{topic}: {accuracy:.1f}% correct ({stats['correct']}/{stats['attempted']})"
+        )
 
 
 # -------------------------------
 # Run Program
 # -------------------------------
-
 if __name__ == "__main__":
-    main()
+    main_menu()
