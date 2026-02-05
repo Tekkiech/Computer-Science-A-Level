@@ -1,0 +1,37 @@
+[
+  {
+    "topic": "Forces",
+    "question": "State the equation used to calculate force",
+    "answer": "force equals mass times acceleration",
+    "marks": 1,
+    "difficulty": "Easy"
+  },
+  {
+    "topic": "Energy",
+    "question": "Unit of energy?",
+    "answer": "joule",
+    "marks": 1,
+    "difficulty": "Easy"
+  },
+  {
+    "topic": "Waves",
+    "question": "Speed = distance / ?",
+    "answer": "time",
+    "marks": 1,
+    "difficulty": "Easy"
+  },
+  {
+    "topic": "Electricity",
+    "question": "Unit of current?",
+    "answer": "ampere",
+    "marks": 1,
+    "difficulty": "Easy"
+  },
+  {
+    "topic": "Forces",
+    "question": "What is the acceleration of an object if force = 10N and mass = 2kg?",
+    "answer": "5",
+    "marks": 2,
+    "difficulty": "Medium"
+  }
+]
