@@ -42,5 +42,9 @@ venv.bak/
 .DS_Store
 Thumbs.db
 
-# Local data
-performance.json
+# Replit
+.replit
+.pythonlibs
+.upm
+pyproject.toml
+uv.lock
