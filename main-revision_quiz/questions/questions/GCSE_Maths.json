@@ -1,0 +1,37 @@
+[
+  {
+    "topic": "Algebra",
+    "question": "Solve 2x + 4 = 12",
+    "answer": "4",
+    "marks": 2,
+    "difficulty": "Easy"
+  },
+  {
+    "topic": "Algebra",
+    "question": "Simplify 3x + 5x",
+    "answer": "8x",
+    "marks": 1,
+    "difficulty": "Easy"
+  },
+  {
+    "topic": "Number",
+    "question": "Calculate 15% of 200",
+    "answer": "30",
+    "marks": 1,
+    "difficulty": "Easy"
+  },
+  {
+    "topic": "Geometry",
+    "question": "What is the sum of angles in a triangle?",
+    "answer": "180",
+    "marks": 1,
+    "difficulty": "Easy"
+  },
+  {
+    "topic": "Probability",
+    "question": "Probability of flipping heads on a coin?",
+    "answer": "0.5",
+    "marks": 1,
+    "difficulty": "Easy"
+  }
+]

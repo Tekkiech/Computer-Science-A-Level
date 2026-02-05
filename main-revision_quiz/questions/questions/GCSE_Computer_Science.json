@@ -1,0 +1,37 @@
+[
+  {
+    "topic": "Programming",
+    "question": "What does IDE stand for?",
+    "answer": "integrated development environment",
+    "marks": 1,
+    "difficulty": "Easy"
+  },
+  {
+    "topic": "Data",
+    "question": "Unit of digital storage",
+    "answer": "byte",
+    "marks": 1,
+    "difficulty": "Easy"
+  },
+  {
+    "topic": "Algorithms",
+    "question": "Steps to solve a problem called?",
+    "answer": "algorithm",
+    "marks": 1,
+    "difficulty": "Easy"
+  },
+  {
+    "topic": "Hardware",
+    "question": "CPU stands for?",
+    "answer": "central processing unit",
+    "marks": 1,
+    "difficulty": "Easy"
+  },
+  {
+    "topic": "Software",
+    "question": "System software manages what?",
+    "answer": "hardware",
+    "marks": 1,
+    "difficulty": "Easy"
+  }
+]
