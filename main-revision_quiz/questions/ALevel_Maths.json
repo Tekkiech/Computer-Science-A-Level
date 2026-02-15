@@ -1,36 +1,85 @@
 [
   {
     "topic": "Algebra",
-    "question": "Solve 2x + 4 = 12",
-    "answer": "4",
+    "question": "Solve for x: 3x^2 - 12 = 0",
+    "answer": ["2", "-2"],
     "marks": 2,
     "difficulty": "Easy"
   },
   {
-    "topic": "Algebra",
-    "question": "Simplify 3x + 5x",
-    "answer": "8x",
+    "topic": "Calculus",
+    "question": "Differentiate sin(x) with respect to x",
+    "answer": "cos(x)",
     "marks": 1,
     "difficulty": "Easy"
   },
   {
-    "topic": "Number",
-    "question": "Calculate 15% of 200",
-    "answer": "30",
+    "topic": "Calculus",
+    "question": "Differentiate e^(3x) with respect to x",
+    "answer": "3e^(3x)",
+    "marks": 2,
+    "difficulty": "Medium"
+  },
+  {
+    "topic": "Integration",
+    "question": "Find ∫ 2x dx (indefinite integral)",
+    "answer": "x^2 + C",
+    "marks": 2,
+    "difficulty": "Easy"
+  },
+  {
+    "topic": "Integration",
+    "question": "Evaluate the definite integral ∫_0^1 x^2 dx",
+    "answer": "1/3",
+    "marks": 2,
+    "difficulty": "Medium"
+  },
+  {
+    "topic": "Limits & Series",
+    "question": "Find the limit: lim_{x->0} (sin x) / x",
+    "answer": "1",
+    "marks": 1,
+    "difficulty": "Easy"
+  },
+  {
+    "topic": "Sequences & Series",
+    "question": "Determine whether the series sum_{n=1}^infty 1/n converges or diverges",
+    "answer": "diverges",
+    "marks": 2,
+    "difficulty": "Medium"
+  },
+  {
+    "topic": "Matrices",
+    "question": "Calculate the determinant of the matrix [[1, 2], [3, 4]]",
+    "answer": "-2",
+    "marks": 2,
+    "difficulty": "Medium"
+  },
+  {
+    "topic": "Complex Numbers",
+    "question": "What is the complex conjugate of 3 - 4i?",
+    "answer": "3 + 4i",
+    "marks": 1,
+    "difficulty": "Easy"
+  },
+  {
+    "topic": "Logarithms",
+    "question": "Evaluate log base 10 of 1000",
+    "answer": "3",
     "marks": 1,
     "difficulty": "Easy"
   },
   {
     "topic": "Geometry",
-    "question": "What is the sum of angles in a triangle?",
-    "answer": "180",
-    "marks": 1,
-    "difficulty": "Easy"
+    "question": "Write the equation of a circle centred at (2, -1) with radius 3",
+    "answer": "(x-2)^2 + (y+1)^2 = 9",
+    "marks": 2,
+    "difficulty": "Medium"
   },
   {
-    "topic": "Probability",
-    "question": "Probability of flipping heads on a coin?",
-    "answer": "0.5",
+    "topic": "Vectors",
+    "question": "Find the magnitude of the vector (3, 4)",
+    "answer": "5",
     "marks": 1,
     "difficulty": "Easy"
   }

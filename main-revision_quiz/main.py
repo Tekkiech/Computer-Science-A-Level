@@ -1,6 +1,21 @@
+import difflib
 import json
 import os
+import re
 import sys
+import unicodedata
+from typing import Optional
+
+# Try to use rapidfuzz for fuzzy matching if available; fallback to difflib
+try:
+    # rapidfuzz is optional; if present we use its token-based ratio for better results
+    from rapidfuzz import fuzz  # type: ignore
+
+    _HAS_RAPIDFUZZ = True
+except Exception:
+    # Ensure `fuzz` exists even if rapidfuzz is missing so runtime checks won't fail
+    fuzz = None
+    _HAS_RAPIDFUZZ = False
 
 # -------------------------------
 # Constants
@@ -97,27 +112,204 @@ def get_accuracy(data):
 # Quiz Logic
 # -------------------------------
 def ask_question(question, performance, key):
+    """
+    Ask a question and perform robust answer matching:
+    - normalization (case, punctuation, whitespace)
+    - option-letter normalization (A, a., a) -> 'a')
+    - numeric matching (words -> numbers and numeric parsing)
+    - substring matching on normalized text
+    - fuzzy matching with a conservative threshold
+    """
+
+    # --- Helper functions (kept local to avoid polluting global namespace) ---
+    def normalize_text(s: str) -> str:
+        if s is None:
+            return ""
+        s = str(s)
+        s = unicodedata.normalize("NFKC", s)
+        s = s.replace("’", "'").replace("‘", "'").replace("“", '"').replace("”", '"')
+        s = s.strip().lower()
+        # keep only ascii alphanumerics and spaces
+        s = re.sub(r"[^0-9a-z\s]", " ", s)
+        s = re.sub(r"\s+", " ", s).strip()
+        return s
+
+    def normalize_option(s: str) -> str:
+        s = normalize_text(s)
+        if not s:
+            return ""
+        parts = s.split()
+        first = parts[0]
+        m = re.match(r"^([a-zA-Z0-9])[\.\)]?$", first)
+        if m:
+            return m.group(1)
+        return s
+
+    _WORD_NUMS = {
+        "zero": 0,
+        "one": 1,
+        "two": 2,
+        "three": 3,
+        "four": 4,
+        "five": 5,
+        "six": 6,
+        "seven": 7,
+        "eight": 8,
+        "nine": 9,
+        "ten": 10,
+        "eleven": 11,
+        "twelve": 12,
+        "thirteen": 13,
+        "fourteen": 14,
+        "fifteen": 15,
+        "sixteen": 16,
+        "seventeen": 17,
+        "eighteen": 18,
+        "nineteen": 19,
+        "twenty": 20,
+        "thirty": 30,
+        "forty": 40,
+        "fifty": 50,
+        "sixty": 60,
+        "seventy": 70,
+        "eighty": 80,
+        "ninety": 90,
+    }
+
+    def word_number_to_int(s: str) -> Optional[int]:
+        s = normalize_text(s)
+        if not s:
+            return None
+        parts = s.split()
+        total = 0
+        i = 0
+        while i < len(parts):
+            w = parts[i]
+            if w in _WORD_NUMS:
+                val = _WORD_NUMS[w]
+                # handle "twenty one"
+                if (
+                    val >= 20
+                    and i + 1 < len(parts)
+                    and parts[i + 1] in _WORD_NUMS
+                    and _WORD_NUMS[parts[i + 1]] < 10
+                ):
+                    total += val + _WORD_NUMS[parts[i + 1]]
+                    i += 2
+                    continue
+                total += val
+                i += 1
+            else:
+                return None
+        return total
+
+    def is_numeric(s: str) -> Optional[float]:
+        s_norm = normalize_text(s)
+        if not s_norm:
+            return None
+        try:
+            return float(s_norm)
+        except ValueError:
+            pass
+        wn = word_number_to_int(s_norm)
+        if wn is not None:
+            return float(wn)
+        return None
+
+    def _fuzzy_ratio(a: str, b: str) -> float:
+        # Return similarity ratio in range 0..100.
+        # Use rapidfuzz.token_sort_ratio when available and functioning,
+        # otherwise fall back to difflib scaled to 0..100.
+        try:
+            if (
+                _HAS_RAPIDFUZZ
+                and fuzz is not None
+                and hasattr(fuzz, "token_sort_ratio")
+            ):
+                # rapidfuzz's token_sort_ratio typically returns 0..100
+                score = fuzz.token_sort_ratio(a, b)
+                return float(score)
+        except Exception:
+            # If rapidfuzz exists but calling it fails, fall back to difflib
+            pass
+        # difflib returns 0..1, scale to 0..100
+        return difflib.SequenceMatcher(None, a, b).ratio() * 100.0
+
+    # --- End helpers ---
+
     topic = question["topic"]
     correct_answer = question["answer"]
 
-    # support multiple keyword answers
+    # Keep original forms for display, but accept lists or single answers
     if isinstance(correct_answer, list):
-        correct_answer = [a.lower().strip() for a in correct_answer]
+        correct_answers_raw = correct_answer
     else:
-        correct_answer = [correct_answer.lower().strip()]
+        correct_answers_raw = [correct_answer]
 
-    user_answer = input("\n" + question["question"] + " ").lower().strip()
+    user_answer_raw = input("\n" + question["question"] + " ")
+    user_norm = normalize_text(user_answer_raw)
+    user_option = normalize_option(user_answer_raw)
 
     if topic not in performance[key]:
         performance[key][topic] = {"attempted": 0, "correct": 0}
 
     performance[key][topic]["attempted"] += 1
 
-    if any(ans in user_answer for ans in correct_answer):
-        print("✅ Correct!\n")
+    accepted = False
+    matched = None
+    fuzzy_threshold = 88.0  # tune this (higher -> stricter)
+
+    for ca_raw in correct_answers_raw:
+        ca_norm = normalize_text(ca_raw)
+        ca_option = normalize_option(ca_raw)
+
+        # 1) exact normalized match
+        if user_norm and ca_norm and user_norm == ca_norm:
+            accepted = True
+            matched = ca_raw
+            break
+
+        # 2) option-letter/number equivalence (A vs "a.", "a)")
+        if user_option and ca_option and user_option == ca_option:
+            accepted = True
+            matched = ca_raw
+            break
+
+        # 3) numeric matching (numbers spelled out or digits)
+        ua_num = is_numeric(user_answer_raw)
+        ca_num = is_numeric(ca_raw)
+        if ua_num is not None and ca_num is not None:
+            # exact numeric equality (could be relaxed with tolerance if desired)
+            if abs(ua_num - ca_num) < 1e-9:
+                accepted = True
+                matched = ca_raw
+                break
+
+        # 4) containment of normalized correct answer inside user response (helps short answers)
+        if ca_norm and ca_norm in user_norm:
+            accepted = True
+            matched = ca_raw
+            break
+
+        # 5) fuzzy match on normalized text (conservative threshold)
+        if ca_norm and user_norm:
+            score = _fuzzy_ratio(user_norm, ca_norm)
+            if score >= fuzzy_threshold:
+                accepted = True
+                matched = ca_raw
+                break
+
+    if accepted:
+        # Use the matched correct answer in the success message when available
+        if matched:
+            print(f"✅ Correct! (accepted: {matched})\n")
+        else:
+            print("✅ Correct!\n")
         performance[key][topic]["correct"] += 1
     else:
-        print(f"❌ Incorrect. Correct answer: {', '.join(correct_answer)}\n")
+        # Show the original correct answers (unmodified) to the user
+        display_correct = ", ".join(str(a) for a in correct_answers_raw)
+        print(f"❌ Incorrect. Correct answer: {display_correct}\n")
 
 
 # -------------------------------

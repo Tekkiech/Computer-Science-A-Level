@@ -7,30 +7,88 @@
     "difficulty": "Easy"
   },
   {
-    "topic": "Data",
-    "question": "Unit of digital storage",
-    "answer": "byte",
+    "topic": "Data Representation",
+    "question": "What is the basic unit of digital storage?",
+    "answer": "bit",
     "marks": 1,
     "difficulty": "Easy"
   },
   {
+    "topic": "Data Representation",
+    "question": "How many bytes are in a kilobyte (using the common binary convention)?",
+    "answer": ["1024", "1024 bytes"],
+    "marks": 1,
+    "difficulty": "Medium"
+  },
+  {
     "topic": "Algorithms",
-    "question": "Steps to solve a problem called?",
+    "question": "What is the term for a step-by-step procedure to solve a problem?",
     "answer": "algorithm",
     "marks": 1,
     "difficulty": "Easy"
   },
   {
+    "topic": "Programming",
+    "question": "Name one programming paradigm that focuses on objects containing data and methods.",
+    "answer": ["object oriented", "object-oriented", "oop"],
+    "marks": 1,
+    "difficulty": "Medium"
+  },
+  {
     "topic": "Hardware",
-    "question": "CPU stands for?",
+    "question": "What does CPU stand for?",
     "answer": "central processing unit",
     "marks": 1,
     "difficulty": "Easy"
   },
   {
+    "topic": "Networks",
+    "question": "What does LAN stand for?",
+    "answer": "local area network",
+    "marks": 1,
+    "difficulty": "Easy"
+  },
+  {
+    "topic": "Cybersecurity",
+    "question": "What is the practice of pretending to be a trusted entity to obtain sensitive information called?",
+    "answer": ["phishing", "phishing attack"],
+    "marks": 1,
+    "difficulty": "Medium"
+  },
+  {
+    "topic": "Databases",
+    "question": "What does SQL stand for?",
+    "answer": ["structured query language", "structured query language (sql)"],
+    "marks": 1,
+    "difficulty": "Easy"
+  },
+  {
     "topic": "Software",
-    "question": "System software manages what?",
-    "answer": "hardware",
+    "question": "Name the type of software that controls hardware and provides services to other software.",
+    "answer": ["system software", "operating system", "os"],
+    "marks": 1,
+    "difficulty": "Medium"
+  },
+  {
+    "topic": "Computational Thinking",
+    "question": "Give one example of a decomposition when solving a large problem.",
+    "answer": [
+      "breaking a program into functions",
+      "splitting a task into smaller steps",
+      "divide into subproblems"
+    ],
+    "marks": 2,
+    "difficulty": "Medium"
+  },
+  {
+    "topic": "Ethics & Society",
+    "question": "What is the name of the principle used to describe data that identifies or could identify a person?",
+    "answer": [
+      "personal data",
+      "personal information",
+      "personally identifiable information",
+      "pii"
+    ],
     "marks": 1,
     "difficulty": "Easy"
   }

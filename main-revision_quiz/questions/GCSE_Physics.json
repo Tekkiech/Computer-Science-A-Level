@@ -1,37 +1,86 @@
 [
   {
     "topic": "Forces",
-    "question": "State the equation used to calculate force",
-    "answer": "force equals mass times acceleration",
+    "question": "State the equation used to calculate force.",
+    "answer": "force = mass × acceleration (F = m × a)",
     "marks": 1,
     "difficulty": "Easy"
   },
   {
     "topic": "Energy",
-    "question": "Unit of energy?",
-    "answer": "joule",
+    "question": "What is the SI unit of energy?",
+    "answer": "joule (J)",
     "marks": 1,
     "difficulty": "Easy"
   },
   {
     "topic": "Waves",
-    "question": "Speed = distance / ?",
-    "answer": "time",
+    "question": "Write the wave equation that relates wave speed, frequency and wavelength.",
+    "answer": "speed = frequency × wavelength (v = f × λ)",
     "marks": 1,
     "difficulty": "Easy"
   },
   {
     "topic": "Electricity",
-    "question": "Unit of current?",
-    "answer": "ampere",
+    "question": "What is the SI unit of electric current?",
+    "answer": "ampere (A)",
     "marks": 1,
     "difficulty": "Easy"
   },
   {
-    "topic": "Forces",
-    "question": "What is the acceleration of an object if force = 10N and mass = 2kg?",
-    "answer": "5",
+    "topic": "Kinetic Energy",
+    "question": "Give the formula for the kinetic energy of a moving object.",
+    "answer": "kinetic energy = 0.5 × mass × velocity^2 (KE = 0.5 m v^2)",
     "marks": 2,
     "difficulty": "Medium"
+  },
+  {
+    "topic": "Gravitational Potential Energy",
+    "question": "Write the expression for gravitational potential energy near the Earth's surface.",
+    "answer": "gravitational potential energy = mass × g × height (ΔE = m g h)",
+    "marks": 2,
+    "difficulty": "Medium"
+  },
+  {
+    "topic": "Density",
+    "question": "How is density defined?",
+    "answer": "density = mass / volume (ρ = m / V)",
+    "marks": 1,
+    "difficulty": "Easy"
+  },
+  {
+    "topic": "Waves",
+    "question": "If the frequency of a wave is 5 Hz, what is its period?",
+    "answer": "0.2 s",
+    "marks": 1,
+    "difficulty": "Easy"
+  },
+  {
+    "topic": "Circuits",
+    "question": "State Ohm's law relating voltage, current and resistance.",
+    "answer": "voltage = current × resistance (V = I × R)",
+    "marks": 1,
+    "difficulty": "Easy"
+  },
+  {
+    "topic": "Power",
+    "question": "What is the electrical power in terms of voltage and current?",
+    "answer": "power = voltage × current (P = V × I)",
+    "marks": 1,
+    "difficulty": "Medium"
+  },
+  {
+    "topic": "Pressure",
+    "question": "Define pressure and give its SI unit.",
+    "answer": "pressure = force / area, unit pascal (Pa)",
+    "marks": 1,
+    "difficulty": "Medium"
+  },
+  {
+    "topic": "Forces",
+    "question": "An object of mass 2 kg is acted on by a net force of 6 N. What is its acceleration?",
+    "answer": "3 m/s^2",
+    "marks": 2,
+    "difficulty": "Easy"
   }
 ]

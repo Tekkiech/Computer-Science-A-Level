@@ -7,30 +7,82 @@
     "difficulty": "Easy"
   },
   {
+    "topic": "Cell Biology",
+    "question": "What is the basic unit of life?",
+    "answer": "cell",
+    "marks": 1,
+    "difficulty": "Easy"
+  },
+  {
+    "topic": "Photosynthesis",
+    "question": "Write the word equation for photosynthesis.",
+    "answer": [
+      "carbon dioxide + water -> glucose + oxygen",
+      "6CO2 + 6H2O -> C6H12O6 + 6O2"
+    ],
+    "marks": 2,
+    "difficulty": "Medium"
+  },
+  {
+    "topic": "Photosynthesis",
+    "question": "Where in a plant cell does photosynthesis take place?",
+    "answer": "chloroplast",
+    "marks": 1,
+    "difficulty": "Easy"
+  },
+  {
+    "topic": "Gas Exchange",
+    "question": "Which gas is released by plants during photosynthesis?",
+    "answer": "oxygen",
+    "marks": 1,
+    "difficulty": "Easy"
+  },
+  {
+    "topic": "Transport",
+    "question": "What process describes the movement of water across a partially permeable membrane?",
+    "answer": "osmosis",
+    "marks": 1,
+    "difficulty": "Easy"
+  },
+  {
     "topic": "Genetics",
-    "question": "What carries inherited information?",
-    "answer": "genes",
-    "marks": 1,
-    "difficulty": "Easy"
-  },
-  {
-    "topic": "Ecology",
-    "question": "Name a producer in a food chain",
-    "answer": "plant",
-    "marks": 1,
-    "difficulty": "Easy"
-  },
-  {
-    "topic": "Human Biology",
-    "question": "What organ pumps blood?",
-    "answer": "heart",
+    "question": "Name the molecule that carries genetic information.",
+    "answer": "DNA",
     "marks": 1,
     "difficulty": "Easy"
   },
   {
     "topic": "Enzymes",
-    "question": "Enzymes speed up?",
-    "answer": "reactions",
+    "question": "What is the primary role of enzymes in biological systems?",
+    "answer": ["speed up chemical reactions", "catalyse reactions"],
+    "marks": 1,
+    "difficulty": "Easy"
+  },
+  {
+    "topic": "Human Biology",
+    "question": "Which organ produces insulin?",
+    "answer": "pancreas",
+    "marks": 1,
+    "difficulty": "Easy"
+  },
+  {
+    "topic": "Circulatory System",
+    "question": "What is the main function of red blood cells?",
+    "answer": "transport oxygen",
+    "marks": 1,
+    "difficulty": "Easy"
+  },
+  {
+    "topic": "Homeostasis",
+    "question": "Define homeostasis.",
+    "answer": "maintaining a stable internal environment",
+    "marks": 2,
+    "difficulty": "Medium"
+  },
+  {
+    "topic": "Genetics",
+    "question": "How many chromosomes are found in a normal human gamete (sex cell)?",
+    "answer": "23",
     "marks": 1,
     "difficulty": "Easy"
   }

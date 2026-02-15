@@ -1,37 +1,100 @@
 [
   {
-    "topic": "Atoms",
-    "question": "Symbol for Hydrogen",
-    "answer": "H",
+    "topic": "Atomic Structure",
+    "question": "What is first ionisation energy?",
+    "answer": "The energy required to remove one electron from each atom in one mole of gaseous atoms",
+    "marks": 2,
+    "difficulty": "Easy"
+  },
+  {
+    "topic": "Bonding",
+    "question": "Describe the type of bonding and general structure of magnesium oxide (MgO).",
+    "answer": "Ionic bonding between Mg2+ and O2- ions forming a giant ionic lattice",
+    "marks": 2,
+    "difficulty": "Medium"
+  },
+  {
+    "topic": "Energetics",
+    "question": "State Hess's law.",
+    "answer": "The total enthalpy change for a reaction is independent of the route taken and depends only on the initial and final states",
     "marks": 1,
     "difficulty": "Easy"
   },
   {
-    "topic": "Compounds",
-    "question": "Water formula?",
-    "answer": "H2O",
+    "topic": "Kinetics",
+    "question": "Explain qualitatively why increasing temperature increases reaction rate.",
+    "answer": "Raising temperature increases the proportion of particles with energy greater than the activation energy and increases collision frequency, so more effective collisions occur",
+    "marks": 2,
+    "difficulty": "Easy"
+  },
+  {
+    "topic": "Equilibrium",
+    "question": "Write the expression for the equilibrium constant Kc for the reaction: 2A + B ⇌ 3C",
+    "answer": "Kc = [C]^3 / ([A]^2 [B])",
     "marks": 1,
     "difficulty": "Easy"
   },
   {
-    "topic": "Reactions",
-    "question": "Acid + Base = ?",
-    "answer": "salt and water",
+    "topic": "Acids and Bases",
+    "question": "According to Brønsted–Lowry theory, what is an acid?",
+    "answer": "A proton (H+) donor",
     "marks": 1,
     "difficulty": "Easy"
   },
   {
-    "topic": "Periodic Table",
-    "question": "Atomic number = ?",
-    "answer": "protons",
+    "topic": "Organic Chemistry",
+    "question": "Identify the functional group and give the common name for CH3CH2OH.",
+    "answer": "Alcohol; ethanol",
     "marks": 1,
     "difficulty": "Easy"
   },
   {
-    "topic": "Atoms",
-    "question": "Electrons have what charge?",
-    "answer": "negative",
+    "topic": "Organic Mechanisms",
+    "question": "What is the mechanism for the nitration of benzene and what electrophile is involved?",
+    "answer": "Electrophilic aromatic substitution (EAS) involving the nitronium ion, NO2+",
+    "marks": 2,
+    "difficulty": "Medium"
+  },
+  {
+    "topic": "Redox",
+    "question": "Define oxidation and reduction in terms of electrons.",
+    "answer": "Oxidation is loss of electrons; reduction is gain of electrons",
     "marks": 1,
     "difficulty": "Easy"
+  },
+  {
+    "topic": "Analytical Techniques",
+    "question": "Give the basic principle of mass spectrometry.",
+    "answer": "Species are ionised and separated based on mass-to-charge ratio, producing a mass spectrum used to determine relative isotopic masses and molecular mass",
+    "marks": 2,
+    "difficulty": "Medium"
+  },
+  {
+    "topic": "Transition Metals",
+    "question": "Why do transition metals commonly exhibit variable oxidation states?",
+    "answer": "Because the energies of the 3d and 4s (or equivalent) electrons are similar, allowing different numbers of electrons to be lost or shared",
+    "marks": 2,
+    "difficulty": "Medium"
+  },
+  {
+    "topic": "Thermodynamics",
+    "question": "What is entropy (in simple terms)?",
+    "answer": "A measure of disorder or the number of possible microstates of a system; symbol S",
+    "marks": 1,
+    "difficulty": "Easy"
+  },
+  {
+    "topic": "Organic Synthesis",
+    "question": "How would you convert a secondary alcohol to a ketone? Give a reagent example.",
+    "answer": "Oxidation of the secondary alcohol using oxidising agents such as acidified potassium dichromate (K2Cr2O7) or PCC to give the corresponding ketone",
+    "marks": 2,
+    "difficulty": "Medium"
+  },
+  {
+    "topic": "Electrochemistry",
+    "question": "What is the standard electrode potential (E°) of a half-cell?",
+    "answer": "The potential (voltage) of a half-cell measured relative to the standard hydrogen electrode under standard conditions (1 mol dm^-3, 1 atm, 298 K)",
+    "marks": 2,
+    "difficulty": "Medium"
   }
 ]

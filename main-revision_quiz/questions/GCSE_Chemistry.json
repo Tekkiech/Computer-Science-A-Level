@@ -1,37 +1,58 @@
 [
   {
     "topic": "Atoms",
-    "question": "Symbol for Hydrogen",
-    "answer": "H",
-    "marks": 1,
-    "difficulty": "Easy"
-  },
-  {
-    "topic": "Compounds",
-    "question": "Water formula?",
-    "answer": "H2O",
-    "marks": 1,
-    "difficulty": "Easy"
-  },
-  {
-    "topic": "Reactions",
-    "question": "Acid + Base = ?",
-    "answer": "salt and water",
+    "question": "What charge does a proton have?",
+    "answer": "positive",
     "marks": 1,
     "difficulty": "Easy"
   },
   {
     "topic": "Periodic Table",
-    "question": "Atomic number = ?",
-    "answer": "protons",
+    "question": "How many protons are in a carbon atom?",
+    "answer": ["6", "six"],
     "marks": 1,
     "difficulty": "Easy"
   },
   {
-    "topic": "Atoms",
-    "question": "Electrons have what charge?",
-    "answer": "negative",
+    "topic": "Compounds",
+    "question": "What is the chemical formula for water?",
+    "answer": ["H2O", "H₂O", "water"],
     "marks": 1,
     "difficulty": "Easy"
+  },
+  {
+    "topic": "Bonding",
+    "question": "What type of bonding exists between sodium and chlorine?",
+    "answer": ["ionic", "ionic bonding"],
+    "marks": 1,
+    "difficulty": "Easy"
+  },
+  {
+    "topic": "Reactions",
+    "question": "Which gas is produced when an acid reacts with a metal?",
+    "answer": ["hydrogen", "H2"],
+    "marks": 1,
+    "difficulty": "Easy"
+  },
+  {
+    "topic": "Quantitative Chemistry",
+    "question": "Calculate the relative formula mass (Mr) of CO2. (C = 12, O = 16)",
+    "answer": ["44", "44.0"],
+    "marks": 2,
+    "difficulty": "Medium"
+  },
+  {
+    "topic": "Acids and Bases",
+    "question": "What is the pH value of a neutral aqueous solution at 25°C?",
+    "answer": ["7", "seven"],
+    "marks": 1,
+    "difficulty": "Easy"
+  },
+  {
+    "topic": "Electrolysis",
+    "question": "In the electrolysis of molten sodium chloride, what is produced at the cathode?",
+    "answer": ["sodium", "Na"],
+    "marks": 1,
+    "difficulty": "Medium"
   }
 ]

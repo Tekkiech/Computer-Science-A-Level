@@ -1,36 +1,85 @@
 [
   {
-    "topic": "Cell Biology",
-    "question": "Which part of a cell contains DNA?",
-    "answer": "nucleus",
+    "topic": "Cell Structure",
+    "question": "Which organelle is the main site of aerobic respiration and ATP production?",
+    "answer": ["mitochondrion", "mitochondria"],
     "marks": 1,
     "difficulty": "Easy"
   },
   {
-    "topic": "Genetics",
-    "question": "What carries inherited information?",
-    "answer": "genes",
+    "topic": "Cell Structure",
+    "question": "Name the membrane that controls movement of substances into and out of the cell.",
+    "answer": ["cell membrane", "plasma membrane"],
     "marks": 1,
     "difficulty": "Easy"
   },
   {
-    "topic": "Ecology",
-    "question": "Name a producer in a food chain",
-    "answer": "plant",
-    "marks": 1,
-    "difficulty": "Easy"
-  },
-  {
-    "topic": "Human Biology",
-    "question": "What organ pumps blood?",
-    "answer": "heart",
+    "topic": "Biochemistry",
+    "question": "What is the monomer unit of proteins?",
+    "answer": "amino acid",
     "marks": 1,
     "difficulty": "Easy"
   },
   {
     "topic": "Enzymes",
-    "question": "Enzymes speed up?",
-    "answer": "reactions",
+    "question": "Before denaturation, how does increasing temperature typically affect enzyme activity?",
+    "answer": ["increases rate", "increases reaction rate"],
+    "marks": 1,
+    "difficulty": "Medium"
+  },
+  {
+    "topic": "DNA & Genetics",
+    "question": "Which nucleotide base pairs with guanine in DNA?",
+    "answer": "cytosine",
+    "marks": 1,
+    "difficulty": "Easy"
+  },
+  {
+    "topic": "Transcription & Translation",
+    "question": "Where in a eukaryotic cell does translation (protein synthesis) occur?",
+    "answer": ["ribosome", "on ribosomes"],
+    "marks": 1,
+    "difficulty": "Easy"
+  },
+  {
+    "topic": "Cell Division",
+    "question": "How many genetically distinct daughter cells are produced by meiosis from one diploid cell?",
+    "answer": "4",
+    "marks": 2,
+    "difficulty": "Medium"
+  },
+  {
+    "topic": "Photosynthesis",
+    "question": "Write the overall balanced chemical equation for photosynthesis (general form).",
+    "answer": "6CO2 + 6H2O -> C6H12O6 + 6O2",
+    "marks": 2,
+    "difficulty": "Medium"
+  },
+  {
+    "topic": "Respiration",
+    "question": "Approximately how many ATP molecules are produced per glucose molecule in aerobic respiration (commonly quoted)?",
+    "answer": ["36", "38"],
+    "marks": 2,
+    "difficulty": "Medium"
+  },
+  {
+    "topic": "Immunology",
+    "question": "Which cells differentiate into plasma cells and secrete antibodies?",
+    "answer": ["B cells", "B lymphocytes", "plasma cells"],
+    "marks": 1,
+    "difficulty": "Medium"
+  },
+  {
+    "topic": "Evolution",
+    "question": "What is the term for the process where allele frequencies change over time due to environmental pressures?",
+    "answer": "natural selection",
+    "marks": 1,
+    "difficulty": "Medium"
+  },
+  {
+    "topic": "Ecology",
+    "question": "What term describes the maximum population size of a species that an environment can sustainably support?",
+    "answer": "carrying capacity",
     "marks": 1,
     "difficulty": "Easy"
   }

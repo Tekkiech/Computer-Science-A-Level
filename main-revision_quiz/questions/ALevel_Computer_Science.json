@@ -7,31 +7,80 @@
     "difficulty": "Easy"
   },
   {
-    "topic": "Data",
-    "question": "Unit of digital storage",
-    "answer": "byte",
+    "topic": "Algorithms",
+    "question": "What is the time complexity of binary search (in Big O)?",
+    "answer": "O(log n)",
+    "marks": 1,
+    "difficulty": "Easy"
+  },
+  {
+    "topic": "Data Structures",
+    "question": "Which data structure follows FIFO order?",
+    "answer": "queue",
     "marks": 1,
     "difficulty": "Easy"
   },
   {
     "topic": "Algorithms",
-    "question": "Steps to solve a problem called?",
-    "answer": "algorithm",
+    "question": "Give a short definition of Big O notation.",
+    "answer": "upper bound on time complexity",
+    "marks": 2,
+    "difficulty": "Medium"
+  },
+  {
+    "topic": "Computer Systems",
+    "question": "What does OS stand for?",
+    "answer": "operating system",
     "marks": 1,
     "difficulty": "Easy"
   },
   {
-    "topic": "Hardware",
-    "question": "CPU stands for?",
-    "answer": "central processing unit",
+    "topic": "Networking",
+    "question": "Which OSI layer is primarily responsible for routing packets between networks?",
+    "answer": "network layer",
+    "marks": 2,
+    "difficulty": "Medium"
+  },
+  {
+    "topic": "Databases",
+    "question": "What does SQL stand for?",
+    "answer": "structured query language",
     "marks": 1,
     "difficulty": "Easy"
   },
   {
-    "topic": "Software",
-    "question": "System software manages what?",
-    "answer": "hardware",
+    "topic": "Security",
+    "question": "What is authentication?",
+    "answer": "verifying identity",
     "marks": 1,
     "difficulty": "Easy"
+  },
+  {
+    "topic": "Theory of Computation",
+    "question": "What does it mean for a system to be Turing-complete?",
+    "answer": "can simulate any Turing machine",
+    "marks": 2,
+    "difficulty": "Medium"
+  },
+  {
+    "topic": "Computer Architecture",
+    "question": "What is the purpose of a CPU cache?",
+    "answer": "store frequently used data to reduce access time",
+    "marks": 2,
+    "difficulty": "Medium"
+  },
+  {
+    "topic": "Software Engineering",
+    "question": "What is unit testing?",
+    "answer": "testing individual units or components of code",
+    "marks": 1,
+    "difficulty": "Easy"
+  },
+  {
+    "topic": "Computer Organization",
+    "question": "What is instruction pipelining?",
+    "answer": "overlapping stages of instruction execution to improve throughput",
+    "marks": 3,
+    "difficulty": "Hard"
   }
 ]

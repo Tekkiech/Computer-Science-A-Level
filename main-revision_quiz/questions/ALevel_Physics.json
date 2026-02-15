@@ -1,37 +1,72 @@
 [
   {
-    "topic": "Forces",
-    "question": "State the equation used to calculate force",
-    "answer": "force equals mass times acceleration",
+    "topic": "Mechanics",
+    "question": "State Newton's Second Law in equation form.",
+    "answer": "F = ma",
     "marks": 1,
     "difficulty": "Easy"
   },
   {
+    "topic": "Kinematics",
+    "question": "A car accelerates from rest at 2 m/s^2 for 5 s. What is its final speed in m/s?",
+    "answer": "10",
+    "marks": 2,
+    "difficulty": "Medium"
+  },
+  {
     "topic": "Energy",
-    "question": "Unit of energy?",
-    "answer": "joule",
+    "question": "Write the equation for the work done by a constant force acting at an angle to the displacement.",
+    "answer": "W = F s cos θ",
+    "marks": 2,
+    "difficulty": "Medium"
+  },
+  {
+    "topic": "Electricity",
+    "question": "State Ohm's law in equation form.",
+    "answer": "V = IR",
+    "marks": 1,
+    "difficulty": "Easy"
+  },
+  {
+    "topic": "Fields",
+    "question": "What is the approximate gravitational field strength at the Earth's surface (N/kg)?",
+    "answer": "9.81",
     "marks": 1,
     "difficulty": "Easy"
   },
   {
     "topic": "Waves",
-    "question": "Speed = distance / ?",
-    "answer": "time",
+    "question": "Give the relationship between wave speed, frequency and wavelength.",
+    "answer": "v = f λ",
     "marks": 1,
     "difficulty": "Easy"
   },
   {
-    "topic": "Electricity",
-    "question": "Unit of current?",
-    "answer": "ampere",
-    "marks": 1,
-    "difficulty": "Easy"
-  },
-  {
-    "topic": "Forces",
-    "question": "What is the acceleration of an object if force = 10N and mass = 2kg?",
-    "answer": "5",
+    "topic": "Thermodynamics",
+    "question": "State the first law of thermodynamics for a closed system in words.",
+    "answer": "The change in internal energy equals heat added to the system minus the work done by the system",
     "marks": 2,
     "difficulty": "Medium"
+  },
+  {
+    "topic": "Quantum",
+    "question": "Write the de Broglie wavelength formula for a particle.",
+    "answer": "λ = h / p",
+    "marks": 2,
+    "difficulty": "Hard"
+  },
+  {
+    "topic": "Circular Motion",
+    "question": "A mass moves in a circle of radius 0.5 m at 2 revolutions per second. What is its centripetal acceleration (m/s^2)?",
+    "answer": "78.96",
+    "marks": 2,
+    "difficulty": "Medium"
+  },
+  {
+    "topic": "Electromagnetism",
+    "question": "State Faraday's law (magnitude) in equation form for induced emf.",
+    "answer": "ε = - dΦ/dt",
+    "marks": 2,
+    "difficulty": "Hard"
   }
 ]

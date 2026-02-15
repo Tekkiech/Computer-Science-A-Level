@@ -1,37 +1,72 @@
 [
   {
     "topic": "Algebra",
-    "question": "Solve 2x + 4 = 12",
-    "answer": "4",
+    "question": "Solve 3x + 5 = 20",
+    "answer": "5",
     "marks": 2,
     "difficulty": "Easy"
   },
   {
     "topic": "Algebra",
-    "question": "Simplify 3x + 5x",
-    "answer": "8x",
-    "marks": 1,
-    "difficulty": "Easy"
+    "question": "Expand and simplify: (x + 2)(x - 3)",
+    "answer": "x^2 - x - 6",
+    "marks": 2,
+    "difficulty": "Medium"
   },
   {
     "topic": "Number",
-    "question": "Calculate 15% of 200",
-    "answer": "30",
+    "question": "Calculate 15% of 360",
+    "answer": "54",
     "marks": 1,
     "difficulty": "Easy"
   },
   {
     "topic": "Geometry",
-    "question": "What is the sum of angles in a triangle?",
-    "answer": "180",
+    "question": "What is the area of a circle with radius 7 (give your answer in terms of pi)?",
+    "answer": ["49pi", "49 pi"],
+    "marks": 2,
+    "difficulty": "Medium"
+  },
+  {
+    "topic": "Geometry",
+    "question": "What is the sum of the interior angles of a quadrilateral (in degrees)?",
+    "answer": "360",
     "marks": 1,
     "difficulty": "Easy"
   },
   {
     "topic": "Probability",
-    "question": "Probability of flipping heads on a coin?",
-    "answer": "0.5",
+    "question": "What is the probability of rolling a total of 7 with two fair six-sided dice? Give your answer as a fraction or decimal.",
+    "answer": ["1/6", "0.1667", "0.1666667", "one sixth"],
+    "marks": 2,
+    "difficulty": "Medium"
+  },
+  {
+    "topic": "Ratio",
+    "question": "Simplify the ratio 18:24",
+    "answer": ["3:4", "3 to 4", "3/4"],
     "marks": 1,
     "difficulty": "Easy"
+  },
+  {
+    "topic": "Trigonometry",
+    "question": "What is sin(30°)?",
+    "answer": ["0.5", "1/2", "one half"],
+    "marks": 1,
+    "difficulty": "Easy"
+  },
+  {
+    "topic": "Statistics",
+    "question": "Find the mean (average) of the numbers 4, 7, 9 and 10",
+    "answer": "7.5",
+    "marks": 2,
+    "difficulty": "Easy"
+  },
+  {
+    "topic": "Algebra",
+    "question": "Solve the quadratic equation x^2 - 5x + 6 = 0 (give both roots)",
+    "answer": ["2 and 3", "2,3", "3,2"],
+    "marks": 3,
+    "difficulty": "Medium"
   }
 ]

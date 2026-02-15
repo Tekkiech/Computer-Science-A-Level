@@ -1,20 +1,20 @@
 {
     "GCSE_Maths": {
         "Algebra": {
-            "attempted": 4,
-            "correct": 2
+            "attempted": 6,
+            "correct": 3
         },
         "Number": {
-            "attempted": 2,
-            "correct": 1
+            "attempted": 3,
+            "correct": 2
         },
         "Geometry": {
-            "attempted": 2,
-            "correct": 1
+            "attempted": 3,
+            "correct": 2
         },
         "Probability": {
-            "attempted": 2,
-            "correct": 1
+            "attempted": 3,
+            "correct": 2
         }
     },
     "ALevel_Further_Maths": {
@@ -31,6 +31,68 @@
             "correct": 1
         },
         "Trigonometry": {
+            "attempted": 1,
+            "correct": 1
+        }
+    },
+    "ALevel_Physics": {
+        "Forces": {
+            "attempted": 2,
+            "correct": 1
+        },
+        "Energy": {
+            "attempted": 1,
+            "correct": 1
+        },
+        "Waves": {
+            "attempted": 1,
+            "correct": 1
+        },
+        "Electricity": {
+            "attempted": 1,
+            "correct": 0
+        }
+    },
+    "ALevel_Biology": {
+        "Cell Biology": {
+            "attempted": 1,
+            "correct": 1
+        },
+        "Genetics": {
+            "attempted": 1,
+            "correct": 0
+        },
+        "Ecology": {
+            "attempted": 1,
+            "correct": 0
+        },
+        "Human Biology": {
+            "attempted": 1,
+            "correct": 1
+        },
+        "Enzymes": {
+            "attempted": 1,
+            "correct": 0
+        }
+    },
+    "GCSE_Biology": {
+        "Cell Biology": {
+            "attempted": 1,
+            "correct": 1
+        },
+        "Genetics": {
+            "attempted": 1,
+            "correct": 1
+        },
+        "Ecology": {
+            "attempted": 1,
+            "correct": 0
+        },
+        "Human Biology": {
+            "attempted": 1,
+            "correct": 1
+        },
+        "Enzymes": {
             "attempted": 1,
             "correct": 1
         }
