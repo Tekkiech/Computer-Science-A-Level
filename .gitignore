@@ -1,0 +1,17 @@
+# macOS-specific ignores
+
+# Finder metadata
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Resource fork / thumbnail files
+._*
+
+# Finder icons
+Icon?
+
+# Spotlight and other system folders
+.Spotlight-V100
+.Trashes
+.fseventsd/
