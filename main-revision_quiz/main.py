@@ -6,31 +6,18 @@ import sys
 import unicodedata
 from typing import Optional
 
-# rapidfuzz is an optional dependency that provides higher-quality fuzzy
-# matching for short text answers (it handles token ordering and small edits
-# more gracefully). If it's not installed the program will still run using
-# Python's built-in difflib.
+# rapidfuzz is optional. If missing we use difflib.
 try:
     from rapidfuzz import fuzz  # type: ignore
 
     _HAS_RAPIDFUZZ = True
 except Exception:
-    # Keep a safe fallback so the rest of the code can check the flag and use
-    # difflib when necessary.
     fuzz = None
     _HAS_RAPIDFUZZ = False
 
-# -------------------------------
-# Project configuration
-# -------------------------------
-# Directory containing the per-subject question JSON files and the filename
-# used to persist a student's performance between sessions.
+# Config
 QUESTIONS_DIR = "questions"
 PERFORMANCE_FILE = "performance.json"
-
-# Supported qualification levels and the subjects available in the question
-# bank. These strings are used to construct filenames such as
-# 'ALevel_Computer_Science.json'.
 LEVELS = ["GCSE", "ALevel"]
 SUBJECTS = [
     "Maths",
@@ -42,29 +29,14 @@ SUBJECTS = [
 ]
 
 
-# -------------------------------
-# Small UI helpers
-# -------------------------------
 def clear_screen():
-    """Clear the terminal so the text UI remains tidy.
-
-    This function is intentionally simple and cross-platform (Windows vs POSIX).
-    It makes the CLI feel a little cleaner during a live demo or coursework
-    run-through.
-    """
+    """Clear the terminal for a tidy UI."""
     os.system("cls" if os.name == "nt" else "clear")
 
 
-# -------------------------------
-# File handling helpers
-# -------------------------------
 def load_questions(level, subject):
-    """Load the question list for the given level and subject.
-
-    Expects files named like "<level>_<subject>.json" inside the questions
-    directory. If the file is missing an empty list is returned so the caller
-    can handle the condition without exceptions during a demo.
-    """
+    """Load questions JSON for the given level and subject.
+    Return [] if file not found."""
     filename = f"{level}_{subject}.json"
     path = os.path.join(QUESTIONS_DIR, filename)
     if not os.path.exists(path):
@@ -75,14 +47,8 @@ def load_questions(level, subject):
 
 
 def load_performance():
-    """Read stored performance data from disk.
-
-    The performance file stores how many questions the student attempted and
-    how many they answered correctly per topic. If the file is missing or
-    empty we return an empty dictionary so the app starts fresh. If the JSON is
-    corrupted we warn and also return an empty dataset — this is simpler than
-    attempting to repair the file for a small coursework project.
-    """
+    """Read performance.json. Return {} if missing or empty.
+    If corrupted, warn and start fresh."""
     if not os.path.exists(PERFORMANCE_FILE):
         return {}
     try:
@@ -97,21 +63,13 @@ def load_performance():
 
 
 def save_performance(performance):
-    """Persist performance data as pretty JSON for easy inspection."""
+    """Save performance to disk as pretty JSON."""
     with open(PERFORMANCE_FILE, "w") as file:
         json.dump(performance, file, indent=4)
 
 
-# -------------------------------
-# CLI utility functions
-# -------------------------------
 def choose_option(options, prompt, allow_back=False):
-    """Show a numbered menu and return the selected option.
-
-    This helper keeps the input method consistent and simple so the UI is
-    straightforward to follow during marking/demonstration. If `allow_back` is
-    True a 'Go back' option is included for nested menus.
-    """
+    """Show a simple numbered menu and return the chosen option."""
     while True:
         print("\n" + prompt)
         for i, option in enumerate(options, 1):
@@ -136,43 +94,30 @@ def choose_option(options, prompt, allow_back=False):
 
 
 def get_accuracy(data):
-    """Return the accuracy (correct/attempted) as a fraction 0..1."""
+    """Return accuracy as 0..1."""
     if data["attempted"] == 0:
         return 0
     return data["correct"] / data["attempted"]
 
 
-# -------------------------------
-# Quiz logic and answer matching
-# -------------------------------
 def ask_question(question, performance, key):
-    """Ask a single question, accept flexible answers and update performance.
+    """Ask one question, accept flexible answers, and update performance.
 
-    The matching logic is intentionally forgiving to make revision sessions
-    smoother for students: it normalises case and punctuation, accepts small
-    word-number variants (e.g. 'three' vs '3'), handles option letters
-    ('A', 'a)') and applies a conservative fuzzy-match threshold for minor
-    typos or spelling differences.
-
-    For a larger system these helpers would be extracted to a utility module
-    with unit tests, but for the coursework project we keep them local and
-    readable within this function.
+    Matching is forgiving to help revision:
+    - normalize text
+    - accept option tokens like 'a)' or '1.'
+    - accept small numeric variants like 'three' vs '3'
+    - allow short token containment
+    - use conservative fuzzy match for minor typos
     """
 
-    # --- Local normalisation helpers ---
     def normalize_text(s: str) -> str:
-        """Normalise a string to a lower, ascii-ish form suitable for comparison.
-
-        - Applies Unicode NFKC normalisation
-        - Converts to lowercase
-        - Replaces common typographic quotes
-        - Removes non-alphanumeric characters (except spaces)
-        - Collapses whitespace
-        """
+        """Lowercase, NFKC, remove weird punctuation, keep alphanum and spaces."""
         if s is None:
             return ""
         s = str(s)
         s = unicodedata.normalize("NFKC", s)
+        # replace some smart quotes with plain ones
         s = s.replace("’", "'").replace("‘", "'").replace("“", '"').replace("”", '"')
         s = s.strip().lower()
         s = re.sub(r"[^0-9a-z\s]", " ", s)
@@ -180,14 +125,7 @@ def ask_question(question, performance, key):
         return s
 
     def normalize_option(s: str) -> str:
-        """Extract a canonical token from short option-style answers.
-
-        Examples:
-          - "A.", "a)" -> "a"
-          - "1." -> "1"
-
-        This helps match student input for multiple-choice style answers.
-        """
+        """Get a single option token like 'a' or '1' if present."""
         s = normalize_text(s)
         if not s:
             return ""
@@ -198,7 +136,6 @@ def ask_question(question, performance, key):
             return m.group(1)
         return s
 
-    # small word->number mapping for common number-words (expandable)
     _WORD_NUMS = {
         "zero": 0,
         "one": 1,
@@ -231,10 +168,7 @@ def ask_question(question, performance, key):
     }
 
     def word_number_to_int(s: str) -> Optional[int]:
-        """Convert small spelled-out numbers (e.g. 'twenty one') to an int.
-
-        Returns None if the text cannot be parsed as a simple word-number.
-        """
+        """Convert simple word numbers like 'twenty one' to int, or None."""
         s = normalize_text(s)
         if not s:
             return None
@@ -245,7 +179,6 @@ def ask_question(question, performance, key):
             w = parts[i]
             if w in _WORD_NUMS:
                 val = _WORD_NUMS[w]
-                # handle constructs like "twenty one"
                 if (
                     val >= 20
                     and i + 1 < len(parts)
@@ -262,10 +195,7 @@ def ask_question(question, performance, key):
         return total
 
     def is_numeric(s: str) -> Optional[float]:
-        """Try to interpret a string as a numeric value.
-
-        Accepts plain digits (including floats) and small spelled-out numbers.
-        """
+        """Try float conversion or small word number conversion."""
         s_norm = normalize_text(s)
         if not s_norm:
             return None
@@ -279,11 +209,7 @@ def ask_question(question, performance, key):
         return None
 
     def _fuzzy_ratio(a: str, b: str) -> float:
-        """Return a similarity score between 0 and 100 for two strings.
-
-        Prefer rapidfuzz.token_sort_ratio when available; otherwise fall back
-        to difflib's SequenceMatcher scaled to 0..100.
-        """
+        """Return similarity 0..100. Prefer rapidfuzz if available."""
         try:
             if (
                 _HAS_RAPIDFUZZ
@@ -293,17 +219,12 @@ def ask_question(question, performance, key):
                 score = fuzz.token_sort_ratio(a, b)
                 return float(score)
         except Exception:
-            # If rapidfuzz fails for any reason, we'll quietly fall back.
             pass
         return difflib.SequenceMatcher(None, a, b).ratio() * 100.0
-
-    # --- End local helpers ---
 
     topic = question["topic"]
     correct_answer = question["answer"]
 
-    # Accept either a single canonical answer or a list of acceptable answers
-    # (useful to include synonyms, abbreviations or alternate phrasings).
     if isinstance(correct_answer, list):
         correct_answers_raw = correct_answer
     else:
@@ -313,7 +234,6 @@ def ask_question(question, performance, key):
     user_norm = normalize_text(user_answer_raw)
     user_option = normalize_option(user_answer_raw)
 
-    # Ensure the performance tracking structure exists for this topic.
     if topic not in performance[key]:
         performance[key][topic] = {"attempted": 0, "correct": 0}
 
@@ -321,25 +241,25 @@ def ask_question(question, performance, key):
 
     accepted = False
     matched = None
-    fuzzy_threshold = 88.0  # conservative default for short answers
+    fuzzy_threshold = 88.0
 
     for ca_raw in correct_answers_raw:
         ca_norm = normalize_text(ca_raw)
         ca_option = normalize_option(ca_raw)
 
-        # 1) exact normalized match (case / punctuation removed)
+        # 1) exact normalized match
         if user_norm and ca_norm and user_norm == ca_norm:
             accepted = True
             matched = ca_raw
             break
 
-        # 2) option letter/number equivalence for multiple-choice style answers
+        # 2) option token match
         if user_option and ca_option and user_option == ca_option:
             accepted = True
             matched = ca_raw
             break
 
-        # 3) numeric matching: allow 'three' <-> '3' comparisons
+        # 3) numeric match
         ua_num = is_numeric(user_answer_raw)
         ca_num = is_numeric(ca_raw)
         if ua_num is not None and ca_num is not None:
@@ -348,13 +268,13 @@ def ask_question(question, performance, key):
                 matched = ca_raw
                 break
 
-        # 4) containment: allow short correct tokens inside a longer student reply
+        # 4) containment: short token inside longer reply
         if ca_norm and ca_norm in user_norm:
             accepted = True
             matched = ca_raw
             break
 
-        # 5) conservative fuzzy match to catch minor typos / small differences
+        # 5) fuzzy match for small typos
         if ca_norm and user_norm:
             score = _fuzzy_ratio(user_norm, ca_norm)
             if score >= fuzzy_threshold:
@@ -363,30 +283,18 @@ def ask_question(question, performance, key):
                 break
 
     if accepted:
-        # Friendly feedback that shows which stored answer was accepted. This
-        # makes it clearer during testing and marking why an answer matched.
         if matched:
             print(f"✅ Correct! (accepted: {matched})\n")
         else:
             print("✅ Correct!\n")
         performance[key][topic]["correct"] += 1
     else:
-        # When marking incorrect, display the canonical accepted answers so the
-        # learner can see what was expected and learn from the feedback.
         display_correct = ", ".join(str(a) for a in correct_answers_raw)
         print(f"❌ Incorrect. Correct answer: {display_correct}\n")
 
 
-# -------------------------------
-# Performance reporting
-# -------------------------------
 def view_performance(performance):
-    """Print a compact, human-readable summary of recorded performance.
-
-    The report is grouped by the level_subject key (e.g. 'ALevel_Computer_Science')
-    and shows per-topic accuracy. This simple reporting is suitable for a
-    coursework demo where a teacher or student needs a quick overview.
-    """
+    """Show a compact report of recorded performance."""
     clear_screen()
     if not performance:
         print("\nNo performance data found.\n")
@@ -405,16 +313,8 @@ def view_performance(performance):
     input("Press Enter to return to main menu...")
 
 
-# -------------------------------
-# Main menu and control flow
-# -------------------------------
 def main_menu():
-    """Top-level menu for students to start quizzes and view performance.
-
-    The interface is intentionally minimal and text-based so it is easy to
-    understand and mark for A-Level coursework. It guides the student through
-    choosing qualification level, subject and running a quiz session.
-    """
+    """Top level menu to start quizzes or view performance."""
     performance = load_performance()
 
     while True:
@@ -438,12 +338,7 @@ def main_menu():
 
 
 def start_quiz(performance):
-    """Run a quiz session for a chosen level and subject.
-
-    This function collects the user's level and subject choices, loads the
-    relevant questions, runs each question and saves the updated performance
-    at the end of the session.
-    """
+    """Run a quiz session for a chosen level and subject."""
     clear_screen()
     level = choose_option(LEVELS, "Choose qualification level:", allow_back=True)
     if level == "BACK":
@@ -470,13 +365,13 @@ def start_quiz(performance):
         ask_question(question, performance, key)
 
     save_performance(performance)
-    print("\n--- Session Summary ---")
+    print("\nSession Summary")
     show_summary(performance[key])
     input("\nPress Enter to return to main menu...")
 
 
 def show_summary(data):
-    """Print a short topic-by-topic accuracy summary for the session."""
+    """Print topic by topic accuracy for the session."""
     for topic, stats in data.items():
         accuracy = get_accuracy(stats) * 100
         print(
@@ -484,8 +379,5 @@ def show_summary(data):
         )
 
 
-# -------------------------------
-# Script entry point
-# -------------------------------
 if __name__ == "__main__":
     main_menu()
