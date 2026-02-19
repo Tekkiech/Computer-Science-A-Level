@@ -22,7 +22,6 @@ Shows clear code, basic persistence, and tolerant answer matching.
   - `main-revision_quiz/questions/` - JSON question files
   - `main-revision_quiz/performance.json` - created at runtime
 - `README.md` - this file
-- `.gitignore`
 
 Example question file:
 ```Computer-Science-A-Level-Project/main-revision_quiz/questions/GCSE_Computer_Science.json#L1-14
