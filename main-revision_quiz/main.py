@@ -502,7 +502,7 @@ def start_quiz(performance):
 
         if not filtered:
             print(
-                f"No questions found for the selected marks. Returning to main menu.\n"
+                "No questions found for the selected marks. Returning to main menu.\n"
             )
             input("Press Enter to continue...")
             return
