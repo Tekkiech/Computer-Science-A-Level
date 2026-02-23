@@ -85,5 +85,15 @@
     "answer": "23",
     "marks": 1,
     "difficulty": "Easy"
+  },
+  {
+    "topic": "Transport",
+    "question": "Explain how water moves from the soil to the leaves of a plant, using the terms cohesion, adhesion and transpiration pull.",
+    "answer": [
+      "transpiration in the leaves creates a tension (transpiration pull) that draws water up the xylem; cohesion between water molecules and adhesion to xylem walls maintain a continuous column of water from roots to leaves",
+      "water is lost from leaves by transpiration, which creates negative pressure; cohesion and adhesion allow the water column to be pulled up through the xylem from the soil"
+    ],
+    "marks": 3,
+    "difficulty": "Hard"
   }
 ]

@@ -33,5 +33,12 @@
     "answer": "3",
     "marks": 1,
     "difficulty": "Easy"
+  },
+  {
+    "topic": "Matrices",
+    "question": "Find the eigenvalues of the matrix [[2, 1], [1, 2]].",
+    "answer": ["3 and 1", "1 and 3", "3", "1"],
+    "marks": 3,
+    "difficulty": "Hard"
   }
 ]

@@ -82,5 +82,12 @@
     "answer": "3 m/s^2",
     "marks": 2,
     "difficulty": "Easy"
+  },
+  {
+    "topic": "Modern Physics",
+    "question": "Describe the photoelectric effect and explain how its observations support the particle (photon) model of light.",
+    "answer": "When light of sufficient frequency strikes a metal surface electrons are emitted immediately; increasing intensity increases the number of emitted electrons but not their maximum kinetic energy, while increasing frequency (above the threshold) increases the kinetic energy. These observations show energy is transferred in discrete quanta (photons), supporting the particle model of light.",
+    "marks": 3,
+    "difficulty": "Hard"
   }
 ]

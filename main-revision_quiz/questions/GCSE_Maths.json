@@ -1,72 +1,86 @@
 [
   {
-    "topic": "Algebra",
-    "question": "Solve 3x + 5 = 20",
-    "answer": "5",
-    "marks": 2,
-    "difficulty": "Easy"
-  },
-  {
-    "topic": "Algebra",
-    "question": "Expand and simplify: (x + 2)(x - 3)",
-    "answer": "x^2 - x - 6",
-    "marks": 2,
-    "difficulty": "Medium"
-  },
-  {
     "topic": "Number",
-    "question": "Calculate 15% of 360",
-    "answer": "54",
+    "question": "What is 15% of 80?",
+    "answer": "12",
     "marks": 1,
     "difficulty": "Easy"
   },
   {
-    "topic": "Geometry",
-    "question": "What is the area of a circle with radius 7 (give your answer in terms of pi)?",
-    "answer": ["49pi", "49 pi"],
-    "marks": 2,
-    "difficulty": "Medium"
-  },
-  {
-    "topic": "Geometry",
-    "question": "What is the sum of the interior angles of a quadrilateral (in degrees)?",
-    "answer": "360",
+    "topic": "Arithmetic",
+    "question": "Round 6.748 to 2 decimal places.",
+    "answer": "6.75",
     "marks": 1,
     "difficulty": "Easy"
   },
   {
-    "topic": "Probability",
-    "question": "What is the probability of rolling a total of 7 with two fair six-sided dice? Give your answer as a fraction or decimal.",
-    "answer": ["1/6", "0.1667", "0.1666667", "one sixth"],
-    "marks": 2,
-    "difficulty": "Medium"
+    "topic": "Fractions",
+    "question": "Write one half as a fraction in lowest terms.",
+    "answer": "1/2",
+    "marks": 1,
+    "difficulty": "Easy"
   },
   {
     "topic": "Ratio",
-    "question": "Simplify the ratio 18:24",
-    "answer": ["3:4", "3 to 4", "3/4"],
+    "question": "If the ratio of A:B is 3:4 and A = 9, what is B?",
+    "answer": "12",
+    "marks": 1,
+    "difficulty": "Easy"
+  },
+  {
+    "topic": "Algebra",
+    "question": "Solve for x: 2x + 5 = 13",
+    "answer": "4",
+    "marks": 1,
+    "difficulty": "Easy"
+  },
+  {
+    "topic": "Algebra",
+    "question": "Expand and simplify: (x + 3)(x - 2).",
+    "answer": "x^2 + x - 6",
+    "marks": 2,
+    "difficulty": "Medium"
+  },
+  {
+    "topic": "Geometry",
+    "question": "Calculate the area of a triangle with base 10 cm and height 6 cm.",
+    "answer": "30",
+    "marks": 1,
+    "difficulty": "Easy"
+  },
+  {
+    "topic": "Pythagoras",
+    "question": "A right-angled triangle has legs of length 3 and 4. What is the length of the hypotenuse?",
+    "answer": "5",
     "marks": 1,
     "difficulty": "Easy"
   },
   {
     "topic": "Trigonometry",
-    "question": "What is sin(30°)?",
-    "answer": ["0.5", "1/2", "one half"],
+    "question": "Find sin(30°).",
+    "answer": "0.5",
+    "marks": 1,
+    "difficulty": "Easy"
+  },
+  {
+    "topic": "Probability",
+    "question": "A single fair six-sided die is rolled. What is the probability of rolling an even number?",
+    "answer": ["1/2", "0.5", "50%"],
     "marks": 1,
     "difficulty": "Easy"
   },
   {
     "topic": "Statistics",
-    "question": "Find the mean (average) of the numbers 4, 7, 9 and 10",
-    "answer": "7.5",
-    "marks": 2,
-    "difficulty": "Easy"
+    "question": "Find the mean of the numbers: 2, 4, 6, 8, 10.",
+    "answer": "6",
+    "marks": 1,
+    "difficulty": "Medium"
   },
   {
-    "topic": "Algebra",
-    "question": "Solve the quadratic equation x^2 - 5x + 6 = 0 (give both roots)",
-    "answer": ["2 and 3", "2,3", "3,2"],
+    "topic": "Algebra (Simultaneous Equations)",
+    "question": "Solve the simultaneous equations: x + y = 5 and xy = 6. Give the values of x and y.",
+    "answer": ["x=2, y=3", "x=3, y=2", "2 and 3", "3 and 2"],
     "marks": 3,
-    "difficulty": "Medium"
+    "difficulty": "Hard"
   }
 ]

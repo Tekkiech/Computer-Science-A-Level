@@ -54,5 +54,15 @@
     "answer": ["sodium", "Na"],
     "marks": 1,
     "difficulty": "Medium"
+  },
+  {
+    "topic": "Organic Chemistry",
+    "question": "Explain why a nucleophilic substitution via SN2 is unlikely at a tertiary carbon centre.",
+    "answer": [
+      "steric hindrance prevents the nucleophile from performing a backside attack, making SN2 unlikely; SN1 (via a carbocation) is more likely",
+      "because of steric hindrance SN2 is disfavoured and nucleophilic substitution proceeds by SN1 for tertiary carbons"
+    ],
+    "marks": 3,
+    "difficulty": "Hard"
   }
 ]

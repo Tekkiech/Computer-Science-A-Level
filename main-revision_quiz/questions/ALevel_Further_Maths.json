@@ -33,5 +33,12 @@
     "answer": "3",
     "marks": 1,
     "difficulty": "Easy"
+  },
+  {
+    "topic": "Differential Equations",
+    "question": "Solve the differential equation dy/dx = y^2 and give the general solution.",
+    "answer": ["y = 1 / (C - x)", "y = 1/( -x + C )"],
+    "marks": 3,
+    "difficulty": "Hard"
   }
 ]

@@ -82,5 +82,12 @@
     "answer": "5",
     "marks": 1,
     "difficulty": "Easy"
+  },
+  {
+    "topic": "Sequences & Series",
+    "question": "Prove that the sequence a_n = (1 + 1/n)^n is increasing and bounded above by e.",
+    "answer": "Show monotonicity using the binomial theorem or compare successive terms, and show upper bound by using the series expansion of e or standard inequalities; the sequence is increasing and tends to e.",
+    "marks": 3,
+    "difficulty": "Hard"
   }
 ]

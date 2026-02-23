@@ -1,6 +1,7 @@
 import difflib
 import json
 import os
+import random
 import re
 import sys
 import unicodedata
@@ -313,6 +314,32 @@ def view_performance(performance):
     input("Press Enter to return to main menu...")
 
 
+def clear_performance(performance):
+    """Clear the performance data file and in-memory performance after confirmation."""
+    clear_screen()
+    print("WARNING: This will permanently delete all recorded performance data.\n")
+    print(
+        "If you want to proceed, type 'YES' (uppercase). To cancel, press Enter or type anything else."
+    )
+    confirm = input("Confirm clear performance: ").strip()
+    if confirm == "YES":
+        # Try removing the file if it exists, then reset in-memory data and save an empty file.
+        try:
+            if os.path.exists(PERFORMANCE_FILE):
+                os.remove(PERFORMANCE_FILE)
+        except Exception as e:
+            print(f"Could not remove performance file: {e}")
+            input("\nPress Enter to return to main menu...")
+            return
+        performance.clear()
+        # Ensure an empty JSON object is written so the application has a valid file next run.
+        save_performance(performance)
+        print("\nAll performance data has been cleared.\n")
+    else:
+        print("\nClear operation cancelled. No changes made.\n")
+    input("Press Enter to return to main menu...")
+
+
 def main_menu():
     """Top level menu to start quizzes or view performance."""
     performance = load_performance()
@@ -323,7 +350,8 @@ def main_menu():
         print("Main Menu:")
         print("1. Start Quiz")
         print("2. View Performance")
-        print("3. Exit")
+        print("3. Clear Performance")
+        print("4. Exit")
 
         choice = input("\nEnter number: ").strip()
         if choice == "1":
@@ -331,14 +359,52 @@ def main_menu():
         elif choice == "2":
             view_performance(performance)
         elif choice == "3":
+            clear_performance(performance)
+        elif choice == "4":
             print("Exiting program. Goodbye!")
             sys.exit()
         else:
             print("Invalid input. Please try again.\n")
 
 
+def _get_available_difficulties(questions):
+    """Return a sorted list of difficulties present in questions, prefixed by 'Any'."""
+    diffs = set()
+    for q in questions:
+        d = q.get("difficulty")
+        if d is None:
+            continue
+        diffs.add(str(d))
+    # define a preferred ordering if common levels found
+    order = ["Easy", "Medium", "Hard"]
+    present_ordered = [d for d in order if d in diffs]
+    # add any remaining difficulties sorted alphabetically
+    remaining = sorted([d for d in diffs if d not in present_ordered])
+    options = ["Any"] + present_ordered + remaining
+    return options
+
+
+def _choose_question_count(max_count):
+    """Prompt user for number of questions to use. Accepts a number or 'all'."""
+    while True:
+        resp = (
+            input(
+                f"Enter number of questions to attempt (1-{max_count}) or 'all' to use all: "
+            )
+            .strip()
+            .lower()
+        )
+        if resp in ("all", ""):
+            return max_count
+        if resp.isdigit():
+            n = int(resp)
+            if 1 <= n <= max_count:
+                return n
+        print("Invalid input. Please enter a valid number or 'all'.")
+
+
 def start_quiz(performance):
-    """Run a quiz session for a chosen level and subject."""
+    """Run a quiz session for a chosen level and subject, with difficulty and count selection."""
     clear_screen()
     level = choose_option(LEVELS, "Choose qualification level:", allow_back=True)
     if level == "BACK":
@@ -359,9 +425,106 @@ def start_quiz(performance):
         input("Press Enter to continue...")
         return
 
-    print(f"\nStarting quiz: {level} {subject.replace('_', ' ')}\n")
+    # Filter selection menu: None / Difficulty / Marks
+    filters = ["None", "Difficulty", "Marks"]
+    clear_screen()
+    filter_choice = choose_option(filters, "Filter questions by:", allow_back=True)
+    if filter_choice == "BACK":
+        return
 
-    for question in questions:
+    filtered = list(questions)
+    filter_info = "None"
+
+    if filter_choice == "Difficulty":
+        # Difficulty sub-selection (re-uses helper)
+        difficulties = _get_available_difficulties(questions)
+        clear_screen()
+        difficulty_choice = choose_option(
+            difficulties, "Choose difficulty (Any = all difficulties):", allow_back=True
+        )
+        if difficulty_choice == "BACK":
+            return
+
+        filter_info = f"Difficulty: {difficulty_choice}"
+        if difficulty_choice == "Any":
+            filtered = list(questions)
+        else:
+            filtered = [
+                q for q in questions if str(q.get("difficulty")) == difficulty_choice
+            ]
+
+        if not filtered:
+            print(
+                f"No questions found for difficulty '{difficulty_choice}'. Returning to main menu.\n"
+            )
+            input("Press Enter to continue...")
+            return
+
+    elif filter_choice == "Marks":
+        # Ask user for a marks filter: exact value, range like '1-2', or 'all' to cancel
+        clear_screen()
+        while True:
+            resp = (
+                input(
+                    "Enter marks to filter (e.g. '1'), a range '1-2', or 'all' to include all marks: "
+                )
+                .strip()
+                .lower()
+            )
+            if resp == "all" or resp == "":
+                filtered = list(questions)
+                filter_info = "Marks: all"
+                break
+            # range form
+            if "-" in resp:
+                parts = resp.split("-", 1)
+                if parts[0].isdigit() and parts[1].isdigit():
+                    lo = int(parts[0])
+                    hi = int(parts[1])
+                    if lo > hi:
+                        lo, hi = hi, lo
+                    filtered = [
+                        q
+                        for q in questions
+                        if isinstance(q.get("marks"), int)
+                        and lo <= q.get("marks") <= hi
+                    ]
+                    filter_info = f"Marks: {lo}-{hi}"
+                    break
+            # single integer
+            if resp.isdigit():
+                m = int(resp)
+                filtered = [q for q in questions if q.get("marks") == m]
+                filter_info = f"Marks: {m}"
+                break
+
+            print("Invalid input. Enter a number, range like '1-2', or 'all'.")
+
+        if not filtered:
+            print(
+                f"No questions found for the selected marks. Returning to main menu.\n"
+            )
+            input("Press Enter to continue...")
+            return
+
+    # Choose number of questions
+    clear_screen()
+    total_available = len(filtered)
+    print(f"\n{total_available} questions available ({filter_info})\n")
+    count = _choose_question_count(total_available)
+
+    # Randomly select requested number of questions
+    if count >= total_available:
+        random.shuffle(filtered)
+        selected_questions = filtered
+    else:
+        selected_questions = random.sample(filtered, count)
+
+    print(
+        f"\nStarting quiz: {level} {subject.replace('_', ' ')} — {filter_info} — Questions: {len(selected_questions)}\n"
+    )
+
+    for question in selected_questions:
         ask_question(question, performance, key)
 
     save_performance(performance)

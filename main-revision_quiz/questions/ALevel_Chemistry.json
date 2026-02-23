@@ -96,5 +96,12 @@
     "answer": "The potential (voltage) of a half-cell measured relative to the standard hydrogen electrode under standard conditions (1 mol dm^-3, 1 atm, 298 K)",
     "marks": 2,
     "difficulty": "Medium"
+  },
+  {
+    "topic": "Molecular Orbital Theory",
+    "question": "Draw or describe the molecular orbital electron configuration for O2 and explain why O2 is paramagnetic.",
+    "answer": "The MO configuration (focusing on valence orbitals) is: (σ2s)² (σ*2s)² (σ2p_z)² (π2p_x)² (π2p_y)² (π*2p_x)¹ (π*2p_y)¹. There are two unpaired electrons occupying the π* antibonding orbitals, so O2 is paramagnetic.",
+    "marks": 3,
+    "difficulty": "Hard"
   }
 ]

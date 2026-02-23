@@ -82,5 +82,16 @@
     "answer": "carrying capacity",
     "marks": 1,
     "difficulty": "Easy"
+  },
+  {
+    "topic": "Metabolism & Pathways",
+    "question": "Outline the main stages of aerobic respiration (glycolysis, link reaction, Krebs cycle, oxidative phosphorylation) and name two principal products formed in the Krebs cycle that are used in oxidative phosphorylation.",
+    "answer": [
+      "glycolysis, link reaction, Krebs cycle, oxidative phosphorylation",
+      "Krebs cycle produces reduced NAD (NADH) and reduced FAD (FADH2)",
+      "main products: NADH and FADH2 (plus some ATP and CO2)"
+    ],
+    "marks": 3,
+    "difficulty": "Hard"
   }
 ]

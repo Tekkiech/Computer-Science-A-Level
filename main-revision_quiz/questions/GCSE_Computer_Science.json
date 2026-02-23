@@ -91,5 +91,15 @@
     ],
     "marks": 1,
     "difficulty": "Easy"
+  },
+  {
+    "topic": "Data Representation",
+    "question": "Explain the difference between lossless and lossy compression and give an example of each.",
+    "answer": [
+      "lossless: reduces size without losing information (example: PNG, ZIP); lossy: reduces size by discarding some information (example: JPEG, MP3)",
+      "lossless compression keeps all original data so it can be perfectly reconstructed (e.g. ZIP, PNG); lossy compression discards some data for higher compression (e.g. JPEG, MP3)"
+    ],
+    "marks": 3,
+    "difficulty": "Hard"
   }
 ]
