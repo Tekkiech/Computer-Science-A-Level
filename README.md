@@ -175,20 +175,3 @@ pip install rapidfuzz
 6. Answer questions in the terminal. Progress is saved.
 
 ---
-
-## Extending / Customising
-
-- Add more questions by editing the JSON files in `main-revision_quiz/questions/`.
-- To add new difficulty labels, include them consistently in the `difficulty` field of questions.
-- To change fuzzy matching sensitivity or other matching rules, edit `main-revision_quiz/main.py`.
-  The matching logic is concentrated inside the function that asks and evaluates a question.
-
----
-
-If you want, I can:
-- Make difficulty matching case-insensitive (normalise labels when reading files),
-- Add a menu option to back up `performance.json` before clearing,
-- Implement multi-select difficulty (choose multiple difficulty levels in one quiz),
-- Or produce a small CONTRIBUTING.md that documents how to add and format questions.
-
-Which would you like next?
