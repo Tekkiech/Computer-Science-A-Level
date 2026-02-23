@@ -173,3 +173,12 @@ pip install rapidfuzz
    - If `Marks`, enter a value (e.g., `2`), a range (`1-3`), or `all`.
 5. Enter question count (e.g. `5` or `all`).
 6. Answer questions in the terminal. Progress is saved.
+
+## Use of AI
+
+This project made limited, explicit use of the Zed AI agent available in the Zed IDE. The agent was used only to:
+
+- Help format this README for easier reading and consistent layout.
+- Generate question prompts / example questions to consider for the various subjects during authoring.
+
+All suggestions from the Zed agent were reviewed, edited, and curated by the project author. The agent was not used to modify program logic, run code, or make automatic changes to the repository — its role was purely editorial and suggestive.
