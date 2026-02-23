@@ -173,5 +173,3 @@ pip install rapidfuzz
    - If `Marks`, enter a value (e.g., `2`), a range (`1-3`), or `all`.
 5. Enter question count (e.g. `5` or `all`).
 6. Answer questions in the terminal. Progress is saved.
-
----
