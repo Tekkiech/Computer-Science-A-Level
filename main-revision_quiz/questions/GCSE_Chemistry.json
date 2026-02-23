@@ -16,7 +16,7 @@
   {
     "topic": "Compounds",
     "question": "What is the chemical formula for water?",
-    "answer": ["H2O", "H₂O", "water"],
+    "answer": ["H2O", "water"],
     "marks": 1,
     "difficulty": "Easy"
   },
@@ -43,7 +43,7 @@
   },
   {
     "topic": "Acids and Bases",
-    "question": "What is the pH value of a neutral aqueous solution at 25°C?",
+    "question": "What is the pH value of a neutral aqueous solution at 25 C?",
     "answer": ["7", "seven"],
     "marks": 1,
     "difficulty": "Easy"
