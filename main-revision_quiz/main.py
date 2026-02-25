@@ -9,7 +9,7 @@ from typing import Optional
 
 # rapidfuzz is optional. If missing we use difflib.
 try:
-    from rapidfuzz import fuzz 
+    from rapidfuzz import fuzz  # type: ignore
 
     _HAS_RAPIDFUZZ = True
 except Exception:
@@ -36,7 +36,7 @@ def clear_screen():
 
 
 def load_questions(level, subject):
-    """load questions JSON for the given level and subject.
+    """Load questions JSON for the given level and subject.
     Return [] if file not found."""
     filename = f"{level}_{subject}.json"
     path = os.path.join(QUESTIONS_DIR, filename)
@@ -48,7 +48,7 @@ def load_questions(level, subject):
 
 
 def load_performance():
-    """read performance.json. Return {} if missing or empty.
+    """Read performance.json. Return {} if missing or empty.
     If corrupted, warn and start fresh."""
     if not os.path.exists(PERFORMANCE_FILE):
         return {}
@@ -64,13 +64,13 @@ def load_performance():
 
 
 def save_performance(performance):
-    """save performance to disk as pretty JSON."""
+    """Save performance to disk as pretty JSON."""
     with open(PERFORMANCE_FILE, "w") as file:
         json.dump(performance, file, indent=4)
 
 
 def choose_option(options, prompt, allow_back=False):
-    """show a simple numbered menu and return the chosen option."""
+    """Show a simple numbered menu and return the chosen option."""
     while True:
         print("\n" + prompt)
         for i, option in enumerate(options, 1):
@@ -102,7 +102,7 @@ def get_accuracy(data):
 
 
 def ask_question(question, performance, key):
-    """ask a question, accept flexible answers, and update performance.
+    """Ask one question, accept flexible answers, and update performance.
 
     Matching is forgiving to help revision:
     - normalize text
@@ -440,12 +440,12 @@ def start_quiz(performance):
         difficulties = _get_available_difficulties(questions)
         clear_screen()
         difficulty_choice = choose_option(
-            difficulties, "choose difficulty (Any = all difficulties):", allow_back=True
+            difficulties, "Choose difficulty (Any = all difficulties):", allow_back=True
         )
         if difficulty_choice == "BACK":
             return
 
-        filter_info = f"difficulty: {difficulty_choice}"
+        filter_info = f"Difficulty: {difficulty_choice}"
         if difficulty_choice == "Any":
             filtered = list(questions)
         else:
@@ -455,9 +455,9 @@ def start_quiz(performance):
 
         if not filtered:
             print(
-                f"no questions found for difficulty '{difficulty_choice}'. returning to main menu.\n"
+                f"No questions found for difficulty '{difficulty_choice}'. Returning to main menu.\n"
             )
-            input("press enter to continue...")
+            input("Press Enter to continue...")
             return
 
     elif filter_choice == "Marks":
@@ -466,14 +466,14 @@ def start_quiz(performance):
         while True:
             resp = (
                 input(
-                    "enter marks to filter (e.g. '1'), a range '1-2', or 'all' to include all marks: "
+                    "Enter marks to filter (e.g. '1'), a range '1-2', or 'all' to include all marks: "
                 )
                 .strip()
                 .lower()
             )
             if resp == "all" or resp == "":
                 filtered = list(questions)
-                filter_info = "marks: all"
+                filter_info = "Marks: all"
                 break
             # range form
             if "-" in resp:
@@ -498,11 +498,11 @@ def start_quiz(performance):
                 filter_info = f"Marks: {m}"
                 break
 
-            print("invalid input. enter a number, range like '1-2', or 'all'.")
+            print("Invalid input. Enter a number, range like '1-2', or 'all'.")
 
         if not filtered:
             print(
-                "no questions found for the selected marks. returning to main menu.\n"
+                "No questions found for the selected marks. Returning to main menu.\n"
             )
             input("Press Enter to continue...")
             return
@@ -521,7 +521,7 @@ def start_quiz(performance):
         selected_questions = random.sample(filtered, count)
 
     print(
-        f"\nstarting quiz: {level} {subject.replace('_', ' ')} — {filter_info} — Questions: {len(selected_questions)}\n"
+        f"\nStarting quiz: {level} {subject.replace('_', ' ')} — {filter_info} — Questions: {len(selected_questions)}\n"
     )
 
     for question in selected_questions:
@@ -534,7 +534,7 @@ def start_quiz(performance):
 
 
 def show_summary(data):
-    """print topic by topic accuracy for the session."""
+    """Print topic by topic accuracy for the session."""
     for topic, stats in data.items():
         accuracy = get_accuracy(stats) * 100
         print(

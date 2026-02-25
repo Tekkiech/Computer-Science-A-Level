@@ -1,1 +1,14 @@
-{}
+{
+    "ALevel_Maths": {
+        "Sequences & Series": {
+            "attempted": 1,
+            "correct": 1
+        }
+    },
+    "GCSE_Maths": {
+        "Trigonometry": {
+            "attempted": 1,
+            "correct": 0
+        }
+    }
+}
