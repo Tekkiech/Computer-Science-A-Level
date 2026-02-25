@@ -1,4 +1,8 @@
+
+
 # Adaptive Revision & Quiz System - A-Level Computer Science Project
+
+## Hello there! My name is Isaac Olukanni, I am a A-Level student at St. Cuthbert's Catholic Sixth Form. This is my NEA Project built in Python
 
 Simple CLI quiz tool in Python. Use it to practice GCSE and A-Level topics.
 The app is intentionally small and self-contained so it's easy to read, run and
