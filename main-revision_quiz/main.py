@@ -7,7 +7,7 @@ import sys
 import unicodedata
 from typing import Optional
 
-# rapidfuzz is optional. If missing we use difflib.
+# rapidfuzz is optional. If missing, use difflib.
 try:
     from rapidfuzz import fuzz  # type: ignore
 
@@ -31,13 +31,13 @@ SUBJECTS = [
 
 
 def clear_screen():
-    """Clear the terminal for a tidy UI."""
+    """clear terminal"""
     os.system("cls" if os.name == "nt" else "clear")
 
 
 def load_questions(level, subject):
-    """Load questions JSON for the given level and subject.
-    Return [] if file not found."""
+    """load questions json for the level and subject.
+    return a [] if file not found."""
     filename = f"{level}_{subject}.json"
     path = os.path.join(QUESTIONS_DIR, filename)
     if not os.path.exists(path):
@@ -48,8 +48,8 @@ def load_questions(level, subject):
 
 
 def load_performance():
-    """Read performance.json. Return {} if missing or empty.
-    If corrupted, warn and start fresh."""
+    """read performance.json and return a {} if it is missing or empty.
+    if the file is corrupted, warn and start fresh."""
     if not os.path.exists(PERFORMANCE_FILE):
         return {}
     try:
@@ -64,13 +64,13 @@ def load_performance():
 
 
 def save_performance(performance):
-    """Save performance to disk as pretty JSON."""
+    """save performance to disk as json."""
     with open(PERFORMANCE_FILE, "w") as file:
         json.dump(performance, file, indent=4)
 
 
 def choose_option(options, prompt, allow_back=False):
-    """Show a simple numbered menu and return the chosen option."""
+    """show  simple numbered menu, return the chosen option."""
     while True:
         print("\n" + prompt)
         for i, option in enumerate(options, 1):
@@ -95,25 +95,20 @@ def choose_option(options, prompt, allow_back=False):
 
 
 def get_accuracy(data):
-    """Return accuracy as 0..1."""
+    """return accuracy in the form of a float between 0 and 1."""
     if data["attempted"] == 0:
         return 0
     return data["correct"] / data["attempted"]
 
 
 def ask_question(question, performance, key):
-    """Ask one question, accept flexible answers, and update performance.
+    """ask a question, accept flexible answers, and update performance from results gotten.
 
-    Matching is forgiving to help revision:
-    - normalize text
-    - accept option tokens like 'a)' or '1.'
-    - accept small numeric variants like 'three' vs '3'
-    - allow short token containment
-    - use conservative fuzzy match for minor typos
+    make matching forgiving to help with revision: normalize text, accept option tokens in the form of 'a)' or '1.', accept small numeric variants like 'three' vs '3', allow short token containment, use conservative fuzzy match for minor typos
     """
 
     def normalize_text(s: str) -> str:
-        """Lowercase, NFKC, remove weird punctuation, keep alphanum and spaces."""
+        """normalise all text inputs by making them lowercase, NFKC (Unicode), remove any weird punctuation, but keep alphanum and spaces."""
         if s is None:
             return ""
         s = str(s)
@@ -126,7 +121,7 @@ def ask_question(question, performance, key):
         return s
 
     def normalize_option(s: str) -> str:
-        """Get a single option token like 'a' or '1' if present."""
+        """get single option token like 'a' or '1' if it is present."""
         s = normalize_text(s)
         if not s:
             return ""
@@ -295,7 +290,7 @@ def ask_question(question, performance, key):
 
 
 def view_performance(performance):
-    """Show a compact report of recorded performance."""
+    """report of recorded performance."""
     clear_screen()
     if not performance:
         print("\nNo performance data found.\n")
@@ -315,7 +310,7 @@ def view_performance(performance):
 
 
 def clear_performance(performance):
-    """Clear the performance data file and in-memory performance after confirmation."""
+    """clear the performance data file after confirmation."""
     clear_screen()
     print("WARNING: This will permanently delete all recorded performance data.\n")
     print(
@@ -341,7 +336,7 @@ def clear_performance(performance):
 
 
 def main_menu():
-    """Top level menu to start quizzes or view performance."""
+    """main menu to start quizzes or view performance."""
     performance = load_performance()
 
     while True:
@@ -368,7 +363,7 @@ def main_menu():
 
 
 def _get_available_difficulties(questions):
-    """Return a sorted list of difficulties present in questions, prefixed by 'Any'."""
+    """return a sorted list of difficulties present in questions, started by 'Any'."""
     diffs = set()
     for q in questions:
         d = q.get("difficulty")
@@ -385,7 +380,7 @@ def _get_available_difficulties(questions):
 
 
 def _choose_question_count(max_count):
-    """Prompt user for number of questions to use. Accepts a number or 'all'."""
+    """ask user for number of questions to use, accepts a number or 'all'."""
     while True:
         resp = (
             input(
@@ -404,7 +399,7 @@ def _choose_question_count(max_count):
 
 
 def start_quiz(performance):
-    """Run a quiz session for a chosen level and subject, with difficulty and count selection."""
+    """run quiz session for chosen level and subject, with difficulty and count selection"""
     clear_screen()
     level = choose_option(LEVELS, "Choose qualification level:", allow_back=True)
     if level == "BACK":
@@ -534,7 +529,7 @@ def start_quiz(performance):
 
 
 def show_summary(data):
-    """Print topic by topic accuracy for the session."""
+    """print a topic by topic accuracy for the session."""
     for topic, stats in data.items():
         accuracy = get_accuracy(stats) * 100
         print(
