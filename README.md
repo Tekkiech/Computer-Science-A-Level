@@ -83,4 +83,4 @@ python3 main-revision_quiz/main_gui.py
 
 ## 🤖 Use of AI
 
-This project made limited, explicit use of AI agents to format this README and provide questions for use in the program as a catalogue.
+This project made limited, explicit use of AI agents to format this README and provide questions for use in the program in the JSON format.
