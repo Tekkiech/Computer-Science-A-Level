@@ -6,7 +6,7 @@ This project is an advanced, adaptive educational tool designed for GCSE and A-L
 
 ---
 
-## 🚀 Key A* Features Implemented
+## Key A* Features Implemented
 
 1. **Modern Graphical User Interface (Event-Driven Programming)**
    - Built using `customtkinter` for a sleek, modern, dark-mode compatible UI.
@@ -38,7 +38,7 @@ This project is an advanced, adaptive educational tool designed for GCSE and A-L
 
 ---
 
-## 📂 Project Structure
+## Project Structure
 
 - `main-revision_quiz/`
   - `main_gui.py` - **The primary entry point!** (CustomTkinter GUI application)
@@ -54,7 +54,7 @@ This project is an advanced, adaptive educational tool designed for GCSE and A-L
 
 ---
 
-## ⚙️ Dependencies & Installation
+## Dependencies & Installation
 
 - Python 3.8+ recommended.
 - Install the required libraries for the GUI, Graphing, and Fuzzy Matching:
@@ -66,7 +66,7 @@ pip install customtkinter matplotlib rapidfuzz
 
 ---
 
-## 🎮 Running the Program
+## Running the Program
 
 To launch the full graphical application, run:
 ```bash
@@ -81,6 +81,6 @@ python3 main-revision_quiz/main_gui.py
 
 ---
 
-## 🤖 Use of AI
+## Use of AI
 
 This project made limited, explicit use of AI agents to format this README and provide questions for use in the program in the JSON format.
