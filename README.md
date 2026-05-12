@@ -62,7 +62,7 @@ This project is an advanced, adaptive educational tool designed for GCSE and A-L
 ```bash
 pip install customtkinter matplotlib rapidfuzz
 ```
-*(Note: If you are on a Mac and get an externally-managed-environment error, you can safely use the `--break-system-packages` flag for this project).*
+*(Note: If you get an externally-managed-environment error while installing the dependencies, you can safely use the `--break-system-packages` flag for this project, or use pipx to install it in an isolated environment instead.).*
 
 ---
 
