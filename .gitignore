@@ -15,3 +15,6 @@ Icon?
 .Spotlight-V100
 .Trashes
 .fseventsd/
+
+__pycache__
+quiz_data.db
