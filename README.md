@@ -21,19 +21,24 @@ This project is an advanced, adaptive educational tool designed for GCSE and A-L
    - **Spaced Repetition:** Calculates exponential backoff for review dates based on accuracy and past attempts (`models/adaptive.py`).
    - **Dynamic Difficulty Adjustment (Elo):** Users and questions both have "Elo ratings". Correctly answering hard questions significantly boosts a student's rating!
 
-4. **Multi-User Authentication & Security**
+4. **Semantic AI Grading (Generative SLM)**
+   - Automatically grades free-text and long-answer questions using a local Small Language Model (SLM) via `llama-cpp-python` and GGUF quantization.
+   - Non-blocking evaluation: Asynchronously infers the correctness of a user's answer, displaying a "Checking..." indicator before providing structured "CORRECT" or "WRONG" explanations.
+   - Automatically downloads the quantized AI models from Hugging Face hub locally on the first run.
+
+5. **Multi-User Authentication & Security**
    - Secure login and registration system.
    - Passwords are securely hashed using `hashlib` (SHA-256) preventing plain-text storage (a key cybersecurity requirement).
 
-5. **Data Visualization**
+6. **Data Visualization**
    - Integrates **Matplotlib** directly into the CustomTkinter GUI.
    - Dynamically generates bar charts querying SQL data to show student accuracy percentages across different subjects and topics.
 
-6. **Advanced String Processing & Fuzzy Matching**
+7. **Advanced String Processing & Fuzzy Matching**
    - A robust natural language processing engine (`models/evaluator.py`) evaluates free-text answers.
    - Includes Unicode NFKC normalization, numeric word parsing (e.g., converting "twenty one" to `21`), token extraction, and fuzzy matching (via `rapidfuzz` or `difflib` fallback) to forgive minor typos.
 
-7. **Object-Oriented Programming (OOP) Architecture**
+8. **Object-Oriented Programming (OOP) Architecture**
    - The entire codebase is strictly Object-Oriented, applying Encapsulation, Modularity, and Inheritance.
 
 ---
@@ -42,14 +47,14 @@ This project is an advanced, adaptive educational tool designed for GCSE and A-L
 
 - `main-revision_quiz/`
   - `main_gui.py` - **The primary entry point!** (CustomTkinter GUI application)
-  - `main.py` - (The older CLI version of the app)
   - `data/`
     - `database.py` - SQLite schema and connection manager (CRUD ops)
-    - `quiz_data.db` - The live 3NF database containing all questions and users
-    - `migrate.py` - Script used to port the old JSON questions into SQLite
+    - `migrate.py` - Script used to port the JSON questions into the SQLite database. Run this first!
   - `models/`
     - `adaptive.py` - Spaced repetition & Elo calculation algorithms
-    - `evaluator.py` - The NLP and fuzzy matching answer grading engine
+    - `evaluator.py` - The NLP, fuzzy matching, and Semantic AI grading engine
+  - `questions/` - JSON files storing all questions for A-Level and GCSE subjects
+- `requirements.txt` - Project dependencies
 - `README.md` - this file
 
 ---
@@ -57,12 +62,35 @@ This project is an advanced, adaptive educational tool designed for GCSE and A-L
 ## Dependencies & Installation
 
 - Python 3.8+ recommended.
-- Install the required libraries for the GUI, Graphing, and Fuzzy Matching:
+
+It is highly recommended to set up a virtual environment for a clean fresh-start:
 
 ```bash
-pip install customtkinter matplotlib rapidfuzz
+# 1. Create a virtual environment
+python3 -m venv venv
+
+# 2. Activate the virtual environment
+# On macOS/Linux:
+source venv/bin/activate
+# On Windows:
+# venv\Scripts\activate
+
+# 3. Install the required dependencies
+pip install -r requirements.txt
 ```
-*(Note: If you get an externally-managed-environment error while installing the dependencies, you can safely use the `--break-system-packages` flag for this project, or use pipx to install it in an isolated environment instead.).*
+
+*(Note: The first time you encounter a long-answer question in the quiz, the app will automatically download a quantized GGUF model into `main-revision_quiz/models/`. This requires an internet connection and will download roughly 1.6GB of data.)*
+
+---
+
+## Initializing the Database
+
+Before launching the application for the first time, you must run the migration script to populate the SQLite database with the JSON questions.
+
+```bash
+python3 main-revision_quiz/data/migrate.py
+```
+This will create a `quiz_data.db` file in the `data/` folder.
 
 ---
 
@@ -76,11 +104,11 @@ python3 main-revision_quiz/main_gui.py
 ### How to use it:
 1. **Register**: Create a new account on the login screen.
 2. **Dashboard**: Navigate to the Main Menu.
-3. **Take a Quiz**: Select a subject. Answer questions using the smart Answer Evaluator. Type `!exit` to quit a quiz early, or finish all 5 to see your summary.
+3. **Take a Quiz**: Select a subject. You can configure the long-answer threshold via the slider. Answer questions using the smart Answer Evaluator, which will trigger the AI semantics checker for complex answers.
 4. **View Performance**: Go to the Performance Profile, select a subject you've taken a quiz in, and view your dynamically generated Matplotlib accuracy graph!
 
 ---
 
 ## Use of AI
 
-This project made limited, explicit use of AI agents to format this README and to generate questions for use in the program in the JSON format.
+This project made limited, explicit use of AI agents to format this README and to generate questions for use in the program in the JSON format. AI models (Qwen) were additionally integrated strictly locally (no remote API calls) specifically to enhance the educational evaluation engine, operating within typical user hardware limits.
