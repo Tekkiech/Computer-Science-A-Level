@@ -8,9 +8,9 @@ def migrate_data(db_path, questions_dir):
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
 
-    # Ensure tables exist just in case script is run independently
-    from database import DatabaseManager
-    # Note: we will just use raw sqlite for the migration script to be safe
+    # Clear existing data so we don't duplicate if run multiple times
+    cursor.execute("DELETE FROM Questions")
+    cursor.execute("DELETE FROM Subjects")
 
     for filename in os.listdir(questions_dir):
         if filename.endswith(".json"):
@@ -55,7 +55,8 @@ def migrate_data(db_path, questions_dir):
 
 
 if __name__ == "__main__":
-    # Assuming script is run from main-revision_quiz/v2_astar/data/
-    db_path = "quiz_data.db"
-    questions_dir = "../../questions"
+    # Use absolute paths relative to this script
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    db_path = os.path.join(script_dir, "quiz_data.db")
+    questions_dir = os.path.join(script_dir, "..", "questions")
     migrate_data(db_path, questions_dir)

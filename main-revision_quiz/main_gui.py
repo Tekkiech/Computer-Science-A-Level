@@ -406,8 +406,27 @@ class SubjectSelectionFrame(ctk.CTkFrame):
         )
         self.title_label.pack(pady=(40, 20))
 
+        # Config for Flashcard/Long Answer threshold
+        self.config_frame = ctk.CTkFrame(self, fg_color="transparent")
+        self.config_frame.pack(pady=5)
+
+        self.threshold_label = ctk.CTkLabel(
+            self.config_frame, text="Long Answer Length Threshold (chars): 30"
+        )
+        self.threshold_label.pack(side="top")
+
+        self.threshold_slider = ctk.CTkSlider(
+            self.config_frame,
+            from_=10,
+            to=100,
+            number_of_steps=90,
+            command=self.update_threshold_label,
+        )
+        self.threshold_slider.set(30)
+        self.threshold_slider.pack(side="top", pady=5)
+
         # I'm using a ScrollableFrame so if I add 50 subjects later, it won't break the UI!
-        self.scrollable_frame = ctk.CTkScrollableFrame(self, width=400, height=350)
+        self.scrollable_frame = ctk.CTkScrollableFrame(self, width=400, height=300)
         self.scrollable_frame.pack(pady=10)
 
         self.back_btn = ctk.CTkButton(
@@ -417,6 +436,13 @@ class SubjectSelectionFrame(ctk.CTkFrame):
             command=lambda: self.master.show_frame("MainMenu"),
         )
         self.back_btn.pack(pady=20)
+
+    def update_threshold_label(self, value):
+        val = int(value)
+        self.threshold_label.configure(
+            text=f"Long Answer Length Threshold (chars): {val}"
+        )
+        self.master.long_answer_threshold = val
 
     def load_subjects(self):
         # Clear existing buttons first (in case they navigated back and forth)
@@ -464,7 +490,7 @@ class SubjectSelectionFrame(ctk.CTkFrame):
         self.master.show_frame("Quiz")
 
 
-class QuizFrame(ctk.CTkFrame):
+class QuizFrame(ctk.CTkScrollableFrame):
     # This is the actual quiz interface!
     # Event-driven programming makes this much cooler than the CLI.
     def __init__(self, master):
@@ -487,7 +513,7 @@ class QuizFrame(ctk.CTkFrame):
 
         # Using textbox for question so it wraps text automatically if it's long
         self.question_text = ctk.CTkTextbox(
-            self, width=600, height=100, font=ctk.CTkFont(size=18), wrap="word"
+            self, width=600, height=100, font=ctk.CTkFont(size=16), wrap="word"
         )
         self.question_text.pack(pady=10)
         self.question_text.configure(state="disabled")  # Make it read-only
@@ -542,9 +568,15 @@ class QuizFrame(ctk.CTkFrame):
         # -------------------------------------------------
 
         self.feedback_label = ctk.CTkLabel(
-            self, text="", font=ctk.CTkFont(size=16, weight="bold")
+            self,
+            text="",
+            font=ctk.CTkFont(size=15, weight="bold"),
+            wraplength=700,  # Default wraplength
         )
-        self.feedback_label.pack(pady=10)
+        self.feedback_label.pack(pady=10, padx=20)
+
+        # Bind resize event to dynamically update the wrap length
+        self.bind("<Configure>", self._on_configure)
 
         self.elo_label = ctk.CTkLabel(
             self, text="", font=ctk.CTkFont(size=12, slant="italic")
@@ -572,6 +604,14 @@ class QuizFrame(ctk.CTkFrame):
         )
         self.exit_btn.pack(pady=(30, 0))
 
+    def _on_configure(self, event):
+        # Dynamically resize the wraplength so text never gets cut off
+        # The frame width minus some padding
+        if event.width > 50:
+            new_wrap = event.width - 40
+            # Update the wraplength on the labels
+            self.feedback_label.configure(wraplength=new_wrap)
+
     def start_new_quiz(self, questions):
         self.questions = questions
         self.current_q_index = 0
@@ -584,6 +624,8 @@ class QuizFrame(ctk.CTkFrame):
         self.elo_label.configure(text="")
 
         self.answer_entry.pack_forget()
+        if hasattr(self, "long_answer_entry"):
+            self.long_answer_entry.pack_forget()
         self.submit_btn.pack_forget()
         self.reveal_btn.pack_forget()
         self.self_grade_frame.pack_forget()
@@ -610,14 +652,21 @@ class QuizFrame(ctk.CTkFrame):
         except (json.JSONDecodeError, TypeError):
             self.current_answers = [ans_text]
 
-        # Determine if this is a "Long Answer" (e.g., > 30 characters)
-        # If it's a long answer, we use Flashcard Mode instead of typing.
-        self.is_long_answer = len(str(self.current_answers[0])) > 30
+        # Determine if this is a "Long Answer" (e.g., > length threshold)
+        threshold = getattr(self.master, "long_answer_threshold", 30)
+        self.is_long_answer = len(str(self.current_answers[0])) > threshold
 
         if self.is_long_answer:
-            self.reveal_btn.pack(pady=10, before=self.feedback_label)
+            if not hasattr(self, "long_answer_entry"):
+                self.long_answer_entry = ctk.CTkTextbox(
+                    self, width=500, height=100, font=ctk.CTkFont(size=16), wrap="word"
+                )
+            self.submit_btn.pack(pady=10, before=self.feedback_label)
+            self.long_answer_entry.pack(pady=20, before=self.submit_btn)
+            self.long_answer_entry.configure(state="normal")
+            self.long_answer_entry.delete("1.0", "end")
             self.feedback_label.configure(
-                text="Flashcard Mode: Think of the answer in your head, then reveal it.",
+                text="Long Answer: Type your explanation. Our AI will grade it!",
                 text_color="orange",
             )
         else:
@@ -628,38 +677,78 @@ class QuizFrame(ctk.CTkFrame):
 
     def submit_answer(self):
         # Prevent multiple submits
-        if self.answer_entry.cget("state") == "disabled":
+        if self.submit_btn.cget("state") == "disabled":
             return
 
-        user_ans = self.answer_entry.get().strip()
-        if not user_ans:
-            return  # Ignore empty submits
+        if hasattr(self, "is_long_answer") and self.is_long_answer:
+            if getattr(self, "long_answer_entry", None) is None:
+                return
+            user_ans = self.long_answer_entry.get("1.0", "end").strip()
+            if not user_ans:
+                return
+            self.long_answer_entry.configure(state="disabled")
+        else:
+            user_ans = self.answer_entry.get().strip()
+            if not user_ans:
+                return  # Ignore empty submits
+            self.answer_entry.configure(state="disabled")
+
+        self.submit_btn.configure(state="disabled")
+
+        # Show "Checking..." indicator
+        self.feedback_label.configure(text="Checking...", text_color="gray")
+
+        # Evaluate after a tiny delay so the GUI has time to update the label
+        self.after(50, lambda: self._process_evaluation(user_ans))
+
+    def _process_evaluation(self, user_ans):
+        # Pass the question text down into the evaluator for the LLM context!
+        question_text = self.questions[self.current_q_index][2]
 
         # Grade it!
-        is_correct, matched_ans = AnswerEvaluator.evaluate(
-            user_ans, self.current_answers
+        is_correct, matched_ans, meta = AnswerEvaluator.evaluate(
+            user_ans, self.current_answers, question_text=question_text
         )
+
+        method = meta.get("method", "exact")
+        # For generative AI, we'll check if an explanation is returned instead of just a numeric score
+        ai_explanation = meta.get("explanation", "")
 
         if is_correct:
             self.score += 1
-            if matched_ans and matched_ans != user_ans:
+            if method == "semantic":
                 self.feedback_label.configure(
-                    text=f"✅ Correct! (I accepted: {matched_ans})", text_color="green"
+                    text=f"✅ Correct! (AI Check: {ai_explanation})",
+                    text_color="green",
+                )
+            elif matched_ans and matched_ans != user_ans and method != "containment":
+                self.feedback_label.configure(
+                    text=f"✅ Correct! (I accepted: {matched_ans})",
+                    text_color="green",
                 )
             else:
-                self.feedback_label.configure(text="✅ Correct!", text_color="green")
+                self.feedback_label.configure(
+                    text=f"✅ Correct!",
+                    text_color="green",
+                )
         else:
             display_correct = ", ".join(str(a) for a in self.current_answers)
-            self.feedback_label.configure(
-                text=f"❌ Incorrect. The right answer was:\n{display_correct}",
-                text_color="red",
-            )
+            if method == "semantic":
+                self.feedback_label.configure(
+                    text=f"❌ Incorrect. (AI Check: {ai_explanation})\n\nThe right answer was:\n{display_correct}",
+                    text_color="red",
+                )
+            else:
+                self.feedback_label.configure(
+                    text=f"❌ Incorrect. The right answer was:\n{display_correct}",
+                    text_color="red",
+                )
 
         self._save_performance(is_correct)
 
-        # Lock the entry box and show the next button
-        self.answer_entry.configure(state="disabled")
+        # Show the next button
         self.submit_btn.pack_forget()
+        self.submit_btn.configure(state="normal")
         self.next_btn.pack(pady=10, before=self.exit_btn)
 
     def reveal_answer(self):

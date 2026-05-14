@@ -18,3 +18,4 @@ Icon?
 
 __pycache__
 quiz_data.db
+qwen2.5*.gguf
